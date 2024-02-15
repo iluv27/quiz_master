@@ -12,7 +12,7 @@ class SubCategProducts extends StatelessWidget {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0.5,
-          title: Text('data'),
+          title: const Text('data'),
         ),
         body: Center(
           child: Text(maincategName),

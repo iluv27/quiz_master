@@ -13,8 +13,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10),
           child: SearchWidget(),
         ),
         Padding(

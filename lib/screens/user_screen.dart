@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../widgets/profile_widgets.dart';
+
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
 
@@ -8,12 +10,11 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<UserScreen> {
-  List<bool> _selections = [false, true];
   @override
   Widget build(BuildContext context) {
     return ListView(children: [
       Container(
-        height: 120,
+        height: 130,
         decoration: const BoxDecoration(
             gradient: LinearGradient(colors: [
               Color.fromARGB(255, 255, 255, 255),
@@ -25,7 +26,7 @@ class _UserScreenState extends State<UserScreen> {
           padding: EdgeInsets.only(left: 30.0, top: 15, bottom: 10),
           child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
             CircleAvatar(
-              radius: 25,
+              radius: 30,
               backgroundColor: Colors.grey,
               child: Icon(
                 Icons.person,
@@ -64,30 +65,30 @@ class _UserScreenState extends State<UserScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Container(
           color: Theme.of(context).colorScheme.background,
-          child: Column(
+          child: const Column(
             children: [
-              const SizedBox(height: 10),
-              const RepeatedListTile(
+              SizedBox(height: 20),
+              RepeatedListTile(
                 title: 'Edit Profile',
                 icon: Icons.email,
               ),
-              const RepeatedListTile(
+              RepeatedListTile(
                 title: 'Reset Progress',
                 icon: Icons.restart_alt,
               ),
-              const RepeatedListTile(
+              RepeatedListTile(
                 title: 'Support',
                 icon: Icons.support,
               ),
-              const RepeatedListTile(
+              RepeatedListTile(
                 title: 'Privacy Policy',
                 icon: Icons.privacy_tip,
               ),
-              const RepeatedListTile(
+              RepeatedListTile(
                 title: 'Terms of Service',
                 icon: Icons.miscellaneous_services,
               ),
-              const RepeatedListTile(
+              RepeatedListTile(
                 title: 'App Version',
                 icon: Icons.app_settings_alt,
               ),
@@ -95,7 +96,7 @@ class _UserScreenState extends State<UserScreen> {
                   title: 'Light Mode',
                   icon: Icons.light_mode,
                   trailingIcon: ToggleSwitch()),
-              const RepeatedListTile(
+              RepeatedListTile(
                 title: 'Log Out',
                 icon: Icons.logout,
                 trailingIcon: SizedBox(),
@@ -105,80 +106,5 @@ class _UserScreenState extends State<UserScreen> {
         ),
       ),
     ]);
-  }
-}
-
-class ToggleSwitch extends StatefulWidget {
-  @override
-  _ToggleSwitchState createState() => _ToggleSwitchState();
-}
-
-class _ToggleSwitchState extends State<ToggleSwitch> {
-  bool isSwitched = false;
-
-  void _toggleSwitch(bool value) {
-    setState(() {
-      isSwitched = value;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Switch(
-      value: isSwitched,
-      onChanged: _toggleSwitch,
-      activeTrackColor: const Color.fromARGB(86, 224, 120, 30),
-      activeColor: const Color(0xFFE0781E),
-      materialTapTargetSize: MaterialTapTargetSize.padded,
-      splashRadius: 10, // Reduces the tap target size
-    );
-  }
-}
-
-class RepeatedListTile extends StatelessWidget {
-  const RepeatedListTile(
-      {super.key,
-      required this.title,
-      required this.icon,
-      this.onPressed,
-      this.trailingIcon = const Icon(
-        Icons.arrow_forward_ios,
-        size: 16,
-        color: Color(0xff111111),
-      )});
-
-  final String title;
-  final IconData icon;
-  final Function()? onPressed;
-  final Widget trailingIcon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 10.0),
-      child: InkWell(
-        onTap: onPressed,
-        child: ListTile(
-            title: Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-            leading: Container(
-              padding: const EdgeInsets.all(5),
-              decoration: const BoxDecoration(
-                  color: Color.fromARGB(29, 224, 120, 30),
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
-              child: Icon(
-                icon,
-                size: 18,
-                color: const Color(0xFFE0781E),
-              ),
-            ),
-            trailing: trailingIcon),
-      ),
-    );
   }
 }
