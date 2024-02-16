@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_master/theme/provider.dart';
+import 'package:quiz_master/theme/theme.dart';
 
 import '../widgets/profile_widgets.dart';
 
@@ -15,17 +18,31 @@ class _UserScreenState extends State<UserScreen> {
     return ListView(children: [
       Container(
         height: 130,
-        decoration: const BoxDecoration(
-            gradient: LinearGradient(colors: [
-              Color.fromARGB(255, 255, 255, 255),
-              Color.fromARGB(255, 234, 234, 234)
-            ]),
+        decoration: BoxDecoration(
+            gradient:
+                Provider.of<ThemeProvider>(context, listen: false).themeData ==
+                        lightMode
+                    ? const LinearGradient(colors: [
+                        Color.fromARGB(255, 255, 255, 255),
+                        Color.fromARGB(255, 234, 234, 234)
+                      ])
+                    : const LinearGradient(colors: [
+                        Color.fromARGB(255, 0, 0, 0),
+                        Color.fromARGB(255, 24, 24, 24),
+                        Color.fromARGB(237, 39, 39, 39)
+                      ]),
             border: Border(
-                bottom: BorderSide(color: Color(0xff111111), width: 0.5))),
-        child: const Padding(
-          padding: EdgeInsets.only(left: 30.0, top: 15, bottom: 10),
+                bottom: BorderSide(
+                    color: Provider.of<ThemeProvider>(context, listen: false)
+                                .themeData ==
+                            lightMode
+                        ? const Color(0xff111111)
+                        : const Color.fromARGB(140, 201, 201, 201),
+                    width: 0.5))),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 30.0, top: 15, bottom: 10),
           child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 30,
               backgroundColor: Colors.grey,
               child: Icon(
@@ -36,27 +53,23 @@ class _UserScreenState extends State<UserScreen> {
               // backgroundImage: AssetImage('images/css.png'),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 20.0),
+              padding: const EdgeInsets.only(left: 20.0),
               child: SizedBox(
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                    Text(
-                      'Guest',
-                      style: TextStyle(
-                          fontSize: 18,
-                          color: Color(0xff111111),
-                          fontWeight: FontWeight.w600),
-                    ),
-                    SizedBox(
-                      height: 3,
-                    ),
-                    Text('abcdef@gmail.com',
-                        style: TextStyle(
-                            color: Color.fromARGB(185, 59, 59, 59),
-                            fontSize: 14))
-                  ])),
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Guest',
+                        style: Theme.of(context).textTheme.displayLarge,
+                      ),
+                      const SizedBox(
+                        height: 3,
+                      ),
+                      Text('abcdef@gmail.com',
+                          style: Theme.of(context).textTheme.displaySmall)
+                    ]),
+              ),
             )
           ]),
         ),
@@ -65,38 +78,46 @@ class _UserScreenState extends State<UserScreen> {
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: Container(
           color: Theme.of(context).colorScheme.background,
-          child: const Column(
+          child: Column(
             children: [
-              SizedBox(height: 20),
-              RepeatedListTile(
+              const SizedBox(height: 20),
+              const RepeatedListTile(
                 title: 'Edit Profile',
                 icon: Icons.email,
               ),
-              RepeatedListTile(
+              const RepeatedListTile(
                 title: 'Reset Progress',
                 icon: Icons.restart_alt,
               ),
-              RepeatedListTile(
+              const RepeatedListTile(
                 title: 'Support',
                 icon: Icons.support,
               ),
-              RepeatedListTile(
+              const RepeatedListTile(
                 title: 'Privacy Policy',
                 icon: Icons.privacy_tip,
               ),
-              RepeatedListTile(
+              const RepeatedListTile(
                 title: 'Terms of Service',
                 icon: Icons.miscellaneous_services,
               ),
-              RepeatedListTile(
+              const RepeatedListTile(
                 title: 'App Version',
                 icon: Icons.app_settings_alt,
               ),
               RepeatedListTile(
-                  title: 'Light Mode',
-                  icon: Icons.light_mode,
-                  trailingIcon: ToggleSwitch()),
-              RepeatedListTile(
+                  title: Provider.of<ThemeProvider>(context, listen: false)
+                              .themeData ==
+                          lightMode
+                      ? 'Light Mode'
+                      : 'Dark Mode',
+                  icon: Provider.of<ThemeProvider>(context, listen: false)
+                              .themeData ==
+                          lightMode
+                      ? Icons.light_mode
+                      : Icons.dark_mode,
+                  trailingIcon: const ToggleSwitch()),
+              const RepeatedListTile(
                 title: 'Log Out',
                 icon: Icons.logout,
                 trailingIcon: SizedBox(),

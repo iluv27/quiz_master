@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_master/theme/provider.dart';
+
+import '../theme/theme.dart';
 
 class ToggleSwitch extends StatefulWidget {
   const ToggleSwitch({super.key});
@@ -9,12 +13,13 @@ class ToggleSwitch extends StatefulWidget {
 }
 
 class _ToggleSwitchState extends State<ToggleSwitch> {
-  bool isSwitched = false;
+  bool isSwitched = true;
 
   void _toggleSwitch(bool value) {
     setState(() {
       isSwitched = value;
     });
+    Provider.of<ThemeProvider>(context, listen: false).toggleTheme();
   }
 
   @override
@@ -38,8 +43,6 @@ class RepeatedListTile extends StatelessWidget {
       this.onPressed,
       this.trailingIcon = const Icon(
         Icons.arrow_forward_ios,
-        size: 16,
-        color: Color(0xff111111),
       )});
 
   final String title;
@@ -56,16 +59,16 @@ class RepeatedListTile extends StatelessWidget {
         child: ListTile(
             title: Text(
               title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-              ),
+              style: Theme.of(context).textTheme.bodyLarge,
             ),
             leading: Container(
               padding: const EdgeInsets.all(5),
-              decoration: const BoxDecoration(
-                  color: Color.fromARGB(29, 224, 120, 30),
-                  borderRadius: BorderRadius.all(Radius.circular(5))),
+              decoration: BoxDecoration(
+                  color:
+                      Provider.of<ThemeProvider>(context).themeData == lightMode
+                          ? const Color.fromARGB(29, 224, 120, 30)
+                          : const Color.fromARGB(52, 224, 120, 30),
+                  borderRadius: const BorderRadius.all(Radius.circular(5))),
               child: Icon(
                 icon,
                 size: 18,

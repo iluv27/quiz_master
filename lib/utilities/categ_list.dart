@@ -1,51 +1,41 @@
-import 'package:flutter/material.dart';
 import '../widgets/home_widgets.dart';
 
 List<CategoryAvatars2> mainQuizCategory = [
   const CategoryAvatars2(
     image: 'images/html.png',
     label: 'HTML & CSS',
-    catColor: Color.fromARGB(57, 197, 172, 172),
   ),
   const CategoryAvatars2(
     image: 'images/css.png',
     label: 'Javascript',
-    catColor: Color.fromARGB(57, 197, 172, 172),
   ),
   const CategoryAvatars2(
     image: 'images/javascript.png',
     label: 'React.js',
-    catColor: Color.fromARGB(57, 197, 172, 172),
   ),
   const CategoryAvatars2(
     image: 'images/react.png',
     label: 'Angular.js',
-    catColor: Color.fromARGB(57, 197, 172, 172),
   ),
   const CategoryAvatars2(
     image: 'images/css.png',
     label: 'Express.js',
-    catColor: Color.fromARGB(57, 197, 172, 172),
   ),
   const CategoryAvatars2(
     image: 'images/html.png',
     label: 'Java',
-    catColor: Color.fromARGB(57, 197, 172, 172),
   ),
   const CategoryAvatars2(
     image: 'images/javascript.png',
     label: 'Flutter',
-    catColor: Color.fromARGB(57, 197, 172, 172),
   ),
   const CategoryAvatars2(
     image: 'images/react.png',
     label: 'Node.js',
-    catColor: Color.fromARGB(57, 197, 172, 172),
   ),
   const CategoryAvatars2(
     image: 'images/react.png',
     label: 'Python',
-    catColor: Color.fromARGB(57, 197, 172, 172),
   ),
 ];
 

@@ -72,37 +72,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 CategoryAvatars(
                   image: 'images/html.png',
                   label: 'HTML',
-                  catColor: Color.fromARGB(57, 197, 172, 172),
                 ),
                 CategoryAvatars(
                   image: 'images/javascript.png',
                   label: 'Javascript',
-                  catColor: Color.fromARGB(53, 255, 235, 59),
                 ),
                 CategoryAvatars(
                   image: 'images/react.png',
                   label: 'React',
-                  catColor: Color.fromARGB(51, 133, 149, 162),
                 ),
                 CategoryAvatars(
                   image: 'images/css.png',
                   label: 'CSS',
-                  catColor: Color.fromARGB(51, 133, 149, 162),
                 ),
                 CategoryAvatars(
                   image: 'images/react.png',
                   label: 'React',
-                  catColor: Color.fromARGB(51, 133, 149, 162),
                 ),
                 CategoryAvatars(
                   image: 'images/css.png',
                   label: 'CSS',
-                  catColor: Color.fromARGB(51, 133, 149, 162),
                 ),
                 CategoryAvatars(
                   image: 'images/javascript.png',
                   label: 'Javascript',
-                  catColor: Color.fromARGB(51, 133, 149, 162),
                 ),
               ],
             ),
@@ -126,54 +119,54 @@ class _HomeScreenState extends State<HomeScreen> {
                 itemCount: 3,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    crossAxisSpacing: 15,
+                    crossAxisSpacing: 10,
                     childAspectRatio: 0.9,
-                    mainAxisSpacing: 20),
+                    mainAxisSpacing: 15),
                 itemBuilder: (context, index) {
-                  return Container(
-                    padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [
-                          BoxShadow(
-                            color: Color.fromARGB(19, 0, 0, 0),
-                            blurRadius: 1,
+                  return Card(
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(15, 10, 15, 10),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            height: 110,
+                            decoration: BoxDecoration(
+                                image: const DecorationImage(
+                                    image:
+                                        AssetImage('images/promotional3.jpg'),
+                                    fit: BoxFit.cover),
+                                borderRadius: BorderRadius.circular(10)),
                           ),
-                        ]),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 110,
-                          decoration: BoxDecoration(
-                              image: const DecorationImage(
-                                  image: AssetImage('images/promotional3.jpg'),
-                                  fit: BoxFit.cover),
-                              borderRadius: BorderRadius.circular(10)),
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          style: ButtonStyle(
-                            elevation: const MaterialStatePropertyAll(0),
-                            shape: MaterialStatePropertyAll(
-                                RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10))),
-                            backgroundColor:
-                                const MaterialStatePropertyAll<Color>(
-                              Color(0xFFE0781E),
-                            ),
-                            minimumSize: MaterialStatePropertyAll(
-                              Size(MediaQuery.sizeOf(context).width * 1, 36),
-                            ),
+                          const SizedBox(
+                            height: 15,
                           ),
-                          child: const Text('Take Quiz'),
-                        )
-                      ],
+                          ElevatedButton(
+                            onPressed: () {},
+                            style: ButtonStyle(
+                              elevation: const MaterialStatePropertyAll(0),
+                              shape: MaterialStatePropertyAll(
+                                  RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10))),
+                              backgroundColor:
+                                  const MaterialStatePropertyAll<Color>(
+                                Color(0xFFE0781E),
+                              ),
+                              minimumSize: MaterialStatePropertyAll(
+                                Size(MediaQuery.sizeOf(context).width * 1, 36),
+                              ),
+                            ),
+                            child: const Text(
+                              'Take Quiz',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w500),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   );
                 }),

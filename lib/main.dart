@@ -1,26 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_master/screens/home_screen.dart';
-import 'package:quiz_master/theme.dart';
+import 'package:quiz_master/theme/provider.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:quiz_master/screens/history_screen.dart';
 import 'package:quiz_master/screens/user_screen.dart';
+import 'package:quiz_master/theme/theme.dart';
 import 'screens/quiz_screen.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      themeMode: ThemeMode.light,
-      theme: lightMode,
-      darkTheme: darkMode,
+      themeMode: ThemeMode.system,
+      theme: Provider.of<ThemeProvider>(context).themeData,
       home: const HomePage(),
     );
   }
@@ -50,12 +57,20 @@ class _HomePageState extends State<HomePage> {
         body: screens[selectedScreen],
         backgroundColor: Theme.of(context).colorScheme.background,
         bottomNavigationBar: Container(
-          decoration: const BoxDecoration(
-            color: Colors.white,
+          decoration: BoxDecoration(
+            color:
+                Provider.of<ThemeProvider>(context, listen: false).themeData ==
+                        lightMode
+                    ? Colors.white
+                    : Colors.black,
             boxShadow: [
               BoxShadow(
                 blurRadius: 5,
-                color: Color.fromARGB(17, 27, 27, 27),
+                color: Provider.of<ThemeProvider>(context, listen: false)
+                            .themeData ==
+                        lightMode
+                    ? const Color.fromARGB(17, 27, 27, 27)
+                    : const Color.fromARGB(42, 128, 128, 128),
               )
             ],
           ),
@@ -69,14 +84,31 @@ class _HomePageState extends State<HomePage> {
                   });
                 },
                 padding: const EdgeInsets.all(15),
-                rippleColor: Colors.grey[300]!,
+                rippleColor: Provider.of<ThemeProvider>(context, listen: false)
+                            .themeData ==
+                        lightMode
+                    ? Colors.grey[300]!
+                    : const Color.fromARGB(255, 59, 59, 59),
                 gap: 5,
                 activeColor: const Color.fromARGB(255, 255, 255, 255),
-                iconSize: 25,
+                iconSize: Provider.of<ThemeProvider>(context, listen: false)
+                            .themeData ==
+                        lightMode
+                    ? 25
+                    : 22,
                 duration: const Duration(milliseconds: 200),
                 tabBackgroundColor: const Color(0xFFE0781E),
-                backgroundColor: Colors.white,
-                color: const Color(0xff444444),
+                backgroundColor:
+                    Provider.of<ThemeProvider>(context, listen: false)
+                                .themeData ==
+                            lightMode
+                        ? Colors.white
+                        : Colors.black,
+                color: Provider.of<ThemeProvider>(context, listen: false)
+                            .themeData ==
+                        lightMode
+                    ? const Color(0xff444444)
+                    : const Color.fromARGB(255, 206, 206, 206),
                 tabs: const [
                   GButton(
                     icon: Icons.home,
@@ -84,7 +116,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   GButton(
                     icon: Icons.logo_dev,
-                    text: 'Quizes',
+                    text: 'Quizzes',
                   ),
                   GButton(
                     icon: Icons.hive_sharp,

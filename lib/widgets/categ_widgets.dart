@@ -114,11 +114,7 @@ class CategHeaderLabel extends StatelessWidget {
       padding: const EdgeInsets.only(top: 15.0, bottom: 20),
       child: Text(
         headerLabel,
-        style: const TextStyle(
-            color: Color(0xff111111),
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1),
+        style: Theme.of(context).textTheme.displayLarge,
       ),
     );
   }

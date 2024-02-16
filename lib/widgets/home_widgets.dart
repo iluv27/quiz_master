@@ -3,15 +3,10 @@ import 'package:flutter/material.dart';
 // Categoties
 class CategoryAvatars extends StatelessWidget {
   const CategoryAvatars(
-      {super.key,
-      required this.image,
-      required this.label,
-      required this.catColor,
-      this.onTapped});
+      {super.key, required this.image, required this.label, this.onTapped});
 
   final String image;
   final String label;
-  final Color catColor;
   final Function()? onTapped;
 
   @override
@@ -25,7 +20,7 @@ class CategoryAvatars extends StatelessWidget {
             width: 40,
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
             decoration: BoxDecoration(
-                color: catColor,
+                color: Theme.of(context).colorScheme.scrim,
                 borderRadius: BorderRadius.circular(100000),
                 image: DecorationImage(
                   image: AssetImage(image),
@@ -43,15 +38,11 @@ class CategoryAvatars extends StatelessWidget {
 
 class CategoryAvatars2 extends StatelessWidget {
   const CategoryAvatars2(
-      {super.key,
-      required this.image,
-      required this.label,
-      required this.catColor,
-      this.onTapped});
+      {super.key, required this.image, required this.label, this.onTapped});
 
   final String image;
   final String label;
-  final Color catColor;
+
   final Function()? onTapped;
 
   @override
@@ -63,7 +54,7 @@ class CategoryAvatars2 extends StatelessWidget {
           width: 35,
           margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           decoration: BoxDecoration(
-              color: catColor,
+              color: Theme.of(context).colorScheme.scrim,
               borderRadius: BorderRadius.circular(100000),
               image: DecorationImage(
                 image: AssetImage(image),
@@ -86,13 +77,10 @@ class SearchWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SearchBar(
+    return const SearchBar(
       hintText: 'Search quiz?',
-      hintStyle:
-          MaterialStatePropertyAll(Theme.of(context).textTheme.bodyMedium),
-      leading: const Icon(Icons.search),
-      elevation: const MaterialStatePropertyAll(0.6),
-      padding: const MaterialStatePropertyAll<EdgeInsetsGeometry>(
+      leading: Icon(Icons.search),
+      padding: MaterialStatePropertyAll<EdgeInsetsGeometry>(
           EdgeInsets.only(left: 25)),
     );
   }
