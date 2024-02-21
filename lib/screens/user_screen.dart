@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_master/settings_screens/support.dart';
 import 'package:quiz_master/theme/provider.dart';
 import 'package:quiz_master/theme/theme.dart';
 
@@ -89,9 +90,14 @@ class _UserScreenState extends State<UserScreen> {
                 title: 'Reset Progress',
                 icon: Icons.restart_alt,
               ),
-              const RepeatedListTile(
+              RepeatedListTile(
                 title: 'Support',
                 icon: Icons.support,
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const SupportPage();
+                  }));
+                },
               ),
               const RepeatedListTile(
                 title: 'Privacy Policy',

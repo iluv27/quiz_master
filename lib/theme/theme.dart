@@ -15,6 +15,13 @@ ThemeData lightMode = ThemeData(
       primary: AppColors.primary,
       scrim: Color.fromARGB(57, 197, 172, 172)),
 
+  // App Bar Theme
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Colors.white,
+    elevation: 0.5,
+    toolbarHeight: 60,
+  ),
+
   // Text Theme
   textTheme: const TextTheme(
       titleSmall: TextStyle(
@@ -30,10 +37,10 @@ ThemeData lightMode = ThemeData(
       bodyLarge: TextStyle(
           color: Color(0xff111111), fontSize: 16, fontWeight: FontWeight.w400),
       displayLarge: TextStyle(
-          color: Color(0xff111111),
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1),
+        color: Color(0xff111111),
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
       displayMedium: TextStyle(
           color: Color(0xff111111), fontSize: 16, fontWeight: FontWeight.w500),
       displaySmall: TextStyle(color: Color(0xff666666), fontSize: 14)),
@@ -62,6 +69,8 @@ ThemeData lightMode = ThemeData(
     shadowColor: const Color.fromARGB(255, 0, 0, 0),
   ),
 
+  listTileTheme: const ListTileThemeData(tileColor: Colors.white),
+
   // Search Bar Theme
   searchBarTheme: const SearchBarThemeData(
     backgroundColor: MaterialStatePropertyAll(Colors.white),
@@ -89,6 +98,13 @@ ThemeData darkMode = ThemeData(
     scrim: Color.fromRGBO(0, 0, 0, 1),
   ),
 
+  // App Bar Theme
+  appBarTheme: const AppBarTheme(
+    backgroundColor: Colors.black,
+    elevation: 0.5,
+    toolbarHeight: 60,
+  ),
+
   iconTheme: const IconThemeData(
     size: 16,
     color: Color.fromARGB(255, 212, 212, 212),
@@ -112,13 +128,15 @@ ThemeData darkMode = ThemeData(
           fontSize: 16,
           fontWeight: FontWeight.w400),
       displayLarge: TextStyle(
-          color: Color.fromARGB(255, 228, 228, 228),
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          letterSpacing: 1),
+        color: Color.fromARGB(255, 228, 228, 228),
+        fontSize: 20,
+        fontWeight: FontWeight.bold,
+      ),
       displayMedium: TextStyle(
-          color: Color(0xff111111), fontSize: 16, fontWeight: FontWeight.w500),
-      displaySmall: TextStyle(color: Color(0xff666666), fontSize: 14)),
+          color: Color(0xffffffff), fontSize: 16, fontWeight: FontWeight.w500),
+      displaySmall: TextStyle(color: Color(0xFF999999), fontSize: 14)),
+
+  listTileTheme: ListTileThemeData(tileColor: Colors.black),
 
   // Card Theme
   cardTheme: CardTheme(

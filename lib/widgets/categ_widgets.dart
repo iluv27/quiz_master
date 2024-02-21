@@ -58,14 +58,18 @@ class SubcategModel extends StatelessWidget {
                     children: [
                       Text(
                         subCategLabel,
-                        style: Theme.of(context).textTheme.displayMedium,
+                        style: const TextStyle(
+                            color: Color(0xff111111),
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500),
                       ),
                       const SizedBox(
                         height: 5,
                       ),
                       Text(
                         '$questionTotal questions',
-                        style: Theme.of(context).textTheme.displaySmall,
+                        style: const TextStyle(
+                            color: Color(0xff666666), fontSize: 14),
                       ),
                       const SizedBox(
                         height: 10,
