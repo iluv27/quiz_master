@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 abstract class AppColors {
   static const bgLight = Color(0xfff6f6f6);
-  static const bgDark = Color(0XFF111111);
-  static const primary = Color.fromARGB(255, 0, 182, 21);
+  static const bgDark = Color(0XFF191919);
+  static const primary = Color(0xFFE0781E);
   static const secondary = Color(0xFFE2FF06);
 }
 
@@ -33,7 +33,7 @@ ThemeData lightMode = ThemeData(
           color: Color.fromARGB(255, 25, 25, 25),
           fontWeight: FontWeight.w600),
       bodySmall: TextStyle(color: Color.fromARGB(144, 0, 0, 0), fontSize: 12),
-      bodyMedium: TextStyle(color: Colors.black38, fontSize: 16),
+      bodyMedium: TextStyle(color: Color(0xff636363), fontSize: 16),
       bodyLarge: TextStyle(
           color: Color(0xff111111), fontSize: 16, fontWeight: FontWeight.w400),
       displayLarge: TextStyle(
@@ -55,8 +55,8 @@ ThemeData lightMode = ThemeData(
     size: 16,
     color: Color(0xff111111),
   ),
-  primaryIconTheme: const IconThemeData(color: Colors.black54),
-  unselectedWidgetColor: Colors.black54,
+  primaryIconTheme: const IconThemeData(color: Color.fromARGB(182, 51, 51, 51)),
+  unselectedWidgetColor: const Color.fromARGB(138, 51, 51, 51),
   primaryColorLight: const Color.fromARGB(57, 197, 172, 172),
 
   // Card Theme
@@ -76,11 +76,15 @@ ThemeData lightMode = ThemeData(
     backgroundColor: MaterialStatePropertyAll(Colors.white),
     hintStyle: MaterialStatePropertyAll(
       TextStyle(
-          color: Colors.black38, fontSize: 16, fontWeight: FontWeight.normal),
+          color: Color.fromARGB(124, 51, 51, 51),
+          fontSize: 16,
+          fontWeight: FontWeight.normal),
     ),
     textStyle: MaterialStatePropertyAll(
       TextStyle(
-          color: Colors.black87, fontSize: 16, fontWeight: FontWeight.normal),
+          color: Color(0xff111111),
+          fontSize: 16,
+          fontWeight: FontWeight.normal),
     ),
     elevation: MaterialStatePropertyAll(0.6),
     surfaceTintColor: MaterialStatePropertyAll(
@@ -100,7 +104,7 @@ ThemeData darkMode = ThemeData(
 
   // App Bar Theme
   appBarTheme: const AppBarTheme(
-    backgroundColor: Colors.black,
+    backgroundColor: Color(0xff111111),
     elevation: 0.5,
     toolbarHeight: 60,
   ),
@@ -122,7 +126,7 @@ ThemeData darkMode = ThemeData(
           fontWeight: FontWeight.w600),
       bodySmall:
           TextStyle(color: Color.fromARGB(144, 208, 208, 208), fontSize: 12),
-      bodyMedium: TextStyle(color: Colors.black38, fontSize: 16),
+      bodyMedium: TextStyle(color: Color(0xff111111), fontSize: 16),
       bodyLarge: TextStyle(
           color: Color.fromARGB(255, 223, 223, 223),
           fontSize: 16,
@@ -136,14 +140,14 @@ ThemeData darkMode = ThemeData(
           color: Color(0xffffffff), fontSize: 16, fontWeight: FontWeight.w500),
       displaySmall: TextStyle(color: Color(0xFF999999), fontSize: 14)),
 
-  listTileTheme: ListTileThemeData(tileColor: Colors.black),
+  listTileTheme: const ListTileThemeData(tileColor: Color(0xff111111)),
 
   // Card Theme
   cardTheme: CardTheme(
-    color: Colors.black,
+    color: const Color(0xff111111),
     shape: RoundedRectangleBorder(
       side: const BorderSide(
-          color: Color.fromARGB(89, 251, 251, 251),
+          color: Color.fromARGB(44, 251, 251, 251),
           width: 1,
           strokeAlign: BorderSide.strokeAlignOutside),
       borderRadius: BorderRadius.circular(10),
@@ -154,7 +158,7 @@ ThemeData darkMode = ThemeData(
 
   // Search Bar Theme
   searchBarTheme: const SearchBarThemeData(
-      backgroundColor: MaterialStatePropertyAll(Colors.black),
+      backgroundColor: MaterialStatePropertyAll(Color(0xff111111)),
       hintStyle: MaterialStatePropertyAll(
         TextStyle(
             color: Color.fromARGB(207, 251, 251, 251),

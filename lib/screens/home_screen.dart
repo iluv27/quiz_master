@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_master/theme/theme.dart';
 import '../widgets/home_widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -151,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       borderRadius: BorderRadius.circular(10))),
                               backgroundColor:
                                   const MaterialStatePropertyAll<Color>(
-                                Color(0xFFE0781E),
+                                AppColors.primary,
                               ),
                               minimumSize: MaterialStatePropertyAll(
                                 Size(MediaQuery.sizeOf(context).width * 1, 36),

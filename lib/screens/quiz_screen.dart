@@ -46,7 +46,7 @@ class _QuizScreenState extends State<QuizScreen> {
       color: Provider.of<ThemeProvider>(context, listen: false).themeData ==
               lightMode
           ? const Color(0xffffffff)
-          : Colors.black,
+          : const Color(0xff111111),
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Padding(
@@ -103,7 +103,7 @@ class _QuizScreenState extends State<QuizScreen> {
                             ? Colors.white
                             : Colors.transparent
                         : index == selIndex
-                            ? Colors.black
+                            ? const Color(0xff111111)
                             : Colors.transparent,
                   ),
                   child: mainQuizCategory[index]),

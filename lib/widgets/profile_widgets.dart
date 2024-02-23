@@ -28,7 +28,7 @@ class _ToggleSwitchState extends State<ToggleSwitch> {
       value: isSwitched,
       onChanged: _toggleSwitch,
       activeTrackColor: const Color.fromARGB(86, 224, 120, 30),
-      activeColor: const Color(0xFFE0781E),
+      activeColor: AppColors.primary,
       materialTapTargetSize: MaterialTapTargetSize.padded,
       splashRadius: 10, // Reduces the tap target size
     );
@@ -72,7 +72,7 @@ class RepeatedListTile extends StatelessWidget {
               child: Icon(
                 icon,
                 size: 18,
-                color: const Color(0xFFE0781E),
+                color: AppColors.primary,
               ),
             ),
             trailing: trailingIcon),

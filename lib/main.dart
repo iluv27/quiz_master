@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_master/screens/home_screen.dart';
+import 'package:quiz_master/screens/onboarding_screen.dart';
 import 'package:quiz_master/theme/provider.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:quiz_master/screens/history_screen.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: Provider.of<ThemeProvider>(context).themeData,
-      home: const HomePage(),
+      home: const OnboardingScreen(),
     );
   }
 }
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> {
                 Provider.of<ThemeProvider>(context, listen: false).themeData ==
                         lightMode
                     ? Colors.white
-                    : Colors.black,
+                    : const Color(0xff111111),
             boxShadow: [
               BoxShadow(
                 blurRadius: 5,
@@ -97,13 +98,13 @@ class _HomePageState extends State<HomePage> {
                     ? 25
                     : 22,
                 duration: const Duration(milliseconds: 200),
-                tabBackgroundColor: const Color(0xFFE0781E),
+                tabBackgroundColor: AppColors.primary,
                 backgroundColor:
                     Provider.of<ThemeProvider>(context, listen: false)
                                 .themeData ==
                             lightMode
                         ? Colors.white
-                        : Colors.black,
+                        : const Color(0xff111111),
                 color: Provider.of<ThemeProvider>(context, listen: false)
                             .themeData ==
                         lightMode

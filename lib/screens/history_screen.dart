@@ -20,7 +20,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           Container(
             color: Provider.of<ThemeProvider>(context).themeData == lightMode
                 ? const Color(0xfff6f6f6)
-                : const Color(0xff111111),
+                : const Color(0xFF191919),
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Text(
               'Recent Questions',

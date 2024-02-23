@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_master/theme/theme.dart';
 import 'package:quiz_master/widgets/subcateg_products.dart';
 
 class SubcategModel extends StatelessWidget {
@@ -90,7 +91,7 @@ class SubcategModel extends StatelessWidget {
                   elevation: 0,
                   height: 50,
                   minWidth: 50,
-                  color: const Color(0xFFE0781E),
+                  color: AppColors.primary,
                   shape: const CircleBorder(),
                   child: const Icon(
                     Icons.arrow_forward,

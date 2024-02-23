@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_master/settings_screens/app_version.dart';
+import 'package:quiz_master/settings_screens/privacy_policy.dart';
 import 'package:quiz_master/settings_screens/support.dart';
+import 'package:quiz_master/settings_screens/terms.dart';
 import 'package:quiz_master/theme/provider.dart';
 import 'package:quiz_master/theme/theme.dart';
-
 import '../widgets/profile_widgets.dart';
 
 class UserScreen extends StatefulWidget {
@@ -99,17 +101,32 @@ class _UserScreenState extends State<UserScreen> {
                   }));
                 },
               ),
-              const RepeatedListTile(
+              RepeatedListTile(
                 title: 'Privacy Policy',
                 icon: Icons.privacy_tip,
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const PrivacyScreen();
+                  }));
+                },
               ),
-              const RepeatedListTile(
+              RepeatedListTile(
                 title: 'Terms of Service',
                 icon: Icons.miscellaneous_services,
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const TermsOfServiceScreen();
+                  }));
+                },
               ),
-              const RepeatedListTile(
+              RepeatedListTile(
                 title: 'App Version',
                 icon: Icons.app_settings_alt,
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const AppVersionScreen();
+                  }));
+                },
               ),
               RepeatedListTile(
                   title: Provider.of<ThemeProvider>(context, listen: false)
