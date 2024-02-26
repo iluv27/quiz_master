@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_master/screens/home_screen.dart';
-import 'package:quiz_master/screens/onboarding_screen.dart';
+import 'package:quiz_master/splash_screen.dart';
 import 'package:quiz_master/theme/provider.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:quiz_master/screens/history_screen.dart';
@@ -10,6 +10,7 @@ import 'screens/quiz_screen.dart';
 import 'package:provider/provider.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     MultiProvider(
       providers: [
@@ -29,12 +30,10 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: Provider.of<ThemeProvider>(context).themeData,
-      home: const OnboardingScreen(),
+      home: const SplashScreen(),
     );
   }
 }
-
-//Theme.of(context).colorScheme.background,
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

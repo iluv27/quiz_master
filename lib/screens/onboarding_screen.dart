@@ -76,15 +76,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       style: Theme.of(context).textTheme.displaySmall,
                     ),
                     const Icon(
-                      Icons.chevron_right,
-                      size: 23,
+                      Icons.double_arrow_rounded,
+                      size: 2,
                       color: Colors.black45,
                     ),
-                    const Icon(
-                      Icons.chevron_right,
-                      size: 25,
-                      color: Colors.black45,
-                    )
                   ],
                 ),
               )),
@@ -117,7 +112,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                       AppColors.primary,
                     ),
                     minimumSize: MaterialStatePropertyAll(
-                      Size(MediaQuery.sizeOf(context).width * 1, 45),
+                      Size(MediaQuery.sizeOf(context).width * 1, 50),
                     ),
                   ),
                   child: Text(
@@ -238,8 +233,8 @@ class PageControllerIndicator extends StatelessWidget {
         (index) {
           return AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            width: index == controller.page?.round() ? 25.0 : 10.0,
-            height: 10.0,
+            width: index == controller.page?.round() ? 28.0 : 8.0,
+            height: 8.0,
             margin: const EdgeInsets.symmetric(horizontal: 3.0),
             decoration: BoxDecoration(
               color: index == controller.page?.round() ? selectedColor : color,
