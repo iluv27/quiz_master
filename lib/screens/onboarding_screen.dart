@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_master/register/signup_screen.dart';
 import 'package:quiz_master/theme/theme.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -52,7 +53,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             itemBuilder: (context, index) {
               return Column(
                 children: [
-                  ParallaxBackground(imagePath: _backgroundImages[index]),
+                  ParallaxBackground(
+                      currentIndex: _currentPage,
+                      imagePath: _backgroundImages[index]),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: backgroundTexts[index],
@@ -62,7 +65,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             },
           ),
           Positioned(
-              top: 40,
+              top: 30,
               right: 20,
               child: InkWell(
                 onTap: () {
@@ -84,7 +87,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 ),
               )),
           Positioned(
-            bottom: 260,
+            bottom: 290,
             left: 0,
             right: 0,
             child: PageControllerIndicator(
@@ -95,7 +98,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             ),
           ),
           Positioned(
-              bottom: 50,
+              bottom: 45,
               left: 0,
               right: 0,
               child: Padding(
@@ -145,7 +148,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   void _onLastPage() {
     // Perform a different action on the last page
-    print('Button on last page pressed');
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (_) => const SignupScreen()),
+    );
+
     // Add your specific action here
   }
 
@@ -177,7 +183,7 @@ class OnboardingTexts extends StatelessWidget {
       children: [
         Text(onboardingTitle, style: Theme.of(context).textTheme.displayLarge),
         const SizedBox(
-          height: 8,
+          height: 16,
         ),
         Text(
           onboardingSubtitle,
@@ -193,15 +199,21 @@ class OnboardingTexts extends StatelessWidget {
 
 class ParallaxBackground extends StatelessWidget {
   final String imagePath;
+  final int currentIndex;
 
-  const ParallaxBackground({super.key, required this.imagePath});
+  const ParallaxBackground(
+      {super.key, required this.imagePath, required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 20.0),
+      padding: currentIndex == 2
+          ? const EdgeInsets.only(bottom: 20.0)
+          : const EdgeInsets.only(bottom: 70.0, left: 20),
       child: Image(
-        height: MediaQuery.of(context).size.height * 0.69,
+        height: currentIndex == 2
+            ? MediaQuery.of(context).size.height * 0.66
+            : MediaQuery.of(context).size.height * 0.61,
         image: AssetImage(imagePath),
         fit: BoxFit.contain,
         filterQuality: FilterQuality.high,

@@ -82,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       baseColor: Colors.white,
                       highlightColor: const Color(0xFFE0781E),
                       child: Image.asset(
-                        'images/logodark.png',
+                        'images/logo/logodark.png',
                         width: 200,
                         height: 200,
                         fit: BoxFit.contain,
@@ -123,7 +123,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       baseColor: const Color(0xFF111111),
                       highlightColor: Colors.white,
                       child: Image.asset(
-                        'images/logo2.png',
+                        'images/logo/logo2.png',
                         width: 200,
                         height: 200,
                         fit: BoxFit.contain,

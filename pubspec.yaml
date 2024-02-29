@@ -31,6 +31,8 @@ flutter:
   assets:
     - images/
     - images/onboarding/
+    - images/icons/
+    - images/logo/
     - images/quizzes_cat/
     - images/quizzes_cat/html/
     - images/quizzes_cat/javascript/
