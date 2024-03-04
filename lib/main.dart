@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: Provider.of<ThemeProvider>(context).themeData,
-      home: const SplashScreen(),
+      home: const HomePage(),
     );
   }
 }

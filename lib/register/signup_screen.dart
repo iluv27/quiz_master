@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_master/register/register_widgets.dart';
+import 'package:quiz_master/register/signin_screen.dart';
+import 'package:quiz_master/register/verify_code.dart';
 import 'package:quiz_master/theme/theme.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -27,181 +29,189 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          resizeToAvoidBottomInset: true,
+          resizeToAvoidBottomInset: false,
           body: Padding(
             padding: const EdgeInsets.all(25),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
+            child: Stack(
               children: [
-                const Text(
-                  'Sign Up',
-                  style: TextStyle(
-                      fontSize: 32,
-                      color: Color(0xff111111),
-                      fontWeight: FontWeight.w600),
-                ),
-                const SizedBox(
-                  height: 55,
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 1,
-                  child: Form(
-                    key: _formKey,
+                Positioned(
+                  top: 40,
+                  right: 0,
+                  left: 0,
+                  child: SingleChildScrollView(
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        TextButtonWidget(
-                          mainLabel: 'Enter full name',
-                          subLabel: 'Full Name',
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your name';
-                            }
-                            return '';
-                          },
-                          onSaved: (value) {
-                            _name = value;
-                          },
+                        const SizedBox(
+                          height: 40,
+                        ),
+                        const Text(
+                          'Sign Up',
+                          style: TextStyle(
+                              fontSize: 32,
+                              color: Color(0xff111111),
+                              fontWeight: FontWeight.w600),
                         ),
                         const SizedBox(
-                          height: 20,
+                          height: 55,
                         ),
-                        TextButtonWidget(
-                          mainLabel: 'Enter Email',
-                          subLabel: 'Email',
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your email';
-                            } else if (value.isEmailValid() == false) {
-                              return 'Invalid mail';
-                            } else if (value.isEmailValid() == true) {
-                              return 'null';
-                            }
-                            return 'null';
-                          },
-                          onSaved: (value) {
-                            _email = value;
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        TextButtonWidget(
-                          mainLabel: 'Enter Password',
-                          subLabel: 'Password',
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your password';
-                            } else if (value.length < 6) {
-                              return 'Password should be more than 6 characters';
-                            }
-                            return 'null';
-                          },
-                          obscuredText: !passwordVisible,
-                          onSaved: (value) {
-                            _password = value;
-                          },
-                          suffixIcon: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  passwordVisible = !passwordVisible;
-                                });
-                              },
-                              icon: Icon(
-                                passwordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: AppColors.primary,
-                                size: 20,
-                              )),
-                        ),
-                        CheckBoxListTile(
-                          text: Text(
-                              "I accept the terms and conditions  of Joyhomes",
-                              style: Theme.of(context).textTheme.bodySmall),
-                          onChanged: (value) {
-                            setState(() {
-                              _isCheckboxChecked = value ?? false;
-                            });
-                          },
-                        ),
-                        const SizedBox(height: 40),
-                        SignupButton(
-                          onPressed: _isCheckboxChecked
-                              ? () {
-                                  if (_formKey.currentState!.validate()) {
-                                    _formKey.currentState!.save();
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 1,
+                          child: Form(
+                            key: _formKey,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                TextButtonWidget(
+                                  mainLabel: 'Enter full name',
+                                  subLabel: 'Full Name',
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter your name';
+                                    }
+                                    return '';
+                                  },
+                                  onSaved: (value) {
+                                    _name = value;
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                TextButtonWidget(
+                                  mainLabel: 'Enter Email',
+                                  subLabel: 'Email',
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter your email';
+                                    } else if (value.isEmailValid() == false) {
+                                      return 'Invalid mail';
+                                    } else if (value.isEmailValid() == true) {
+                                      return '';
+                                    }
+                                    return '';
+                                  },
+                                  onSaved: (value) {
+                                    _email = value;
+                                  },
+                                ),
+                                const SizedBox(
+                                  height: 20,
+                                ),
+                                TextButtonWidget(
+                                  mainLabel: 'Enter Password',
+                                  subLabel: 'Password',
+                                  validator: (value) {
+                                    if (value!.isEmpty) {
+                                      return 'Please enter your password';
+                                    } else if (value.length < 6) {
+                                      return 'Password should be more than 6 characters';
+                                    }
+                                    return '';
+                                  },
+                                  obscuredText: !passwordVisible,
+                                  onSaved: (value) {
+                                    _password = value;
+                                  },
+                                  suffixIcon: IconButton(
+                                      onPressed: () {
+                                        setState(() {
+                                          passwordVisible = !passwordVisible;
+                                        });
+                                      },
+                                      icon: Icon(
+                                        passwordVisible
+                                            ? Icons.visibility
+                                            : Icons.visibility_off,
+                                        color: AppColors.primary,
+                                        size: 20,
+                                      )),
+                                ),
+                                CheckBoxListTile(
+                                  isChecked: _isCheckboxChecked,
+                                  text: Text(
+                                      'I accept the terms and conditions of Quizmaster',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodySmall),
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _isCheckboxChecked = value ?? true;
+                                    });
+                                  },
+                                ),
+                                const SizedBox(height: 40),
+                                SignupButton(
+                                  onPressed: _isCheckboxChecked
+                                      ? () {
+                                          if (_formKey.currentState!
+                                              .validate()) {
+                                            _formKey.currentState!.save();
 
-                                    debugPrint('Name: $_name');
-                                    debugPrint('Email: $_email');
-                                    debugPrint('Message: $_password');
-                                  }
-                                }
-                              : null,
-                          buttonText: 'Get Started',
+                                            debugPrint('Name: $_name');
+                                            debugPrint('Email: $_email');
+                                            debugPrint('Message: $_password');
+                                            Navigator.pushReplacement(context,
+                                                MaterialPageRoute(
+                                                    builder: (context) {
+                                              return const VerifyCode();
+                                            }));
+                                          }
+                                        }
+                                      : null,
+                                  buttonText: 'Get Started',
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        const OrSign(
+                          orSignWith: 'Or Sign up with',
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.65,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              IconButtonType(
+                                iconsSize: 35,
+                                iconImage: 'facebook',
+                              ).iconButton(),
+                              IconButtonType(iconsSize: 50, iconImage: 'google')
+                                  .iconButton(),
+                              IconButtonType(
+                                      iconsSize: 35, iconImage: 'twitter')
+                                  .iconButton(),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
                 ),
-                const SizedBox(
-                  height: 30,
-                ),
-                const OrSign(
-                  orSignWith: 'Or Sign up with',
-                ),
-                const SizedBox(
-                  height: 5,
-                ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.65,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      IconButtonType(
-                        iconsSize: 35,
-                        iconImage: 'facebook',
-                      ).iconButton(),
-                      IconButtonType(iconsSize: 50, iconImage: 'google')
-                          .iconButton(),
-                      IconButtonType(iconsSize: 35, iconImage: 'twitter')
-                          .iconButton(),
-                    ],
-                  ),
-                ),
+                Positioned(
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: LastText(
+                        main: 'Already have an account? ',
+                        sub: 'Log in',
+                        onTap: () {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (context) {
+                            return const SigninScreen();
+                          }));
+                        },
+                      ),
+                    ))
               ],
             ),
           )),
-    );
-  }
-}
-
-class SignupButton extends StatelessWidget {
-  const SignupButton(
-      {super.key, required this.onPressed, required this.buttonText});
-  final String buttonText;
-  final Null Function()? onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ButtonStyle(
-        elevation: const MaterialStatePropertyAll(0),
-        shape: MaterialStatePropertyAll(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(30))),
-        backgroundColor:
-            const MaterialStatePropertyAll<Color>(AppColors.primary),
-        minimumSize: MaterialStatePropertyAll(
-          Size(MediaQuery.sizeOf(context).width * 1, 50),
-        ),
-      ),
-      child: Text(
-        buttonText,
-        style: const TextStyle(
-            color: Colors.white, fontSize: 16, fontWeight: FontWeight.w600),
-      ),
     );
   }
 }

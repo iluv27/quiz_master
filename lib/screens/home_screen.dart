@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quiz_master/questions/quiz.dart';
 import 'package:quiz_master/theme/theme.dart';
 import '../widgets/home_widgets.dart';
 
@@ -144,7 +145,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             height: 15,
                           ),
                           ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return QuizScreen();
+                              }));
+                            },
                             style: ButtonStyle(
                               elevation: const MaterialStatePropertyAll(0),
                               shape: MaterialStatePropertyAll(
