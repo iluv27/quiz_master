@@ -114,10 +114,12 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
 
         SizedBox(
-          height: 400,
+          height: 450,
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
             child: GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: 3,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
@@ -148,7 +150,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             onPressed: () {
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
-                                return QuizScreen();
+                                return const QuizScreen();
                               }));
                             },
                             style: ButtonStyle(
