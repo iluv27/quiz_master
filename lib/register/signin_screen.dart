@@ -1,8 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quiz_master/register/forgot_password.dart';
 import 'package:quiz_master/register/register_widgets.dart';
 import 'package:quiz_master/register/signup_screen.dart';
+import 'package:quiz_master/services/supabase_services.dart';
 import 'package:quiz_master/theme/theme.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -13,16 +18,37 @@ class SigninScreen extends StatefulWidget {
 
 class _SigninScreenState extends State<SigninScreen> {
   final _formKey = GlobalKey<FormState>();
-  String? _email;
-  String? _password;
+  String email = '';
+  String password = '';
   bool passwordVisible = false;
   bool _isCheckboxChecked = true;
+  late final StreamSubscription<AuthState> authStateSubscription;
+  bool redirecting = false;
+
+  @override
+  void initState() {
+    authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
+      if (redirecting) return;
+      final session = data.session;
+      if (session != null) {
+        redirecting = true;
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) {
+          return const SignupScreen();
+        }));
+      }
+    });
+    super.initState();
+  }
 
   @override
   void dispose() {
     _formKey;
+    authStateSubscription.cancel();
     super.dispose();
   }
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -69,14 +95,15 @@ class _SigninScreenState extends State<SigninScreen> {
                                 TextButtonWidget(
                                   mainLabel: 'Enter Email',
                                   subLabel: 'Email',
+                                  onSaved: (value) {
+                                    email = value!;
+                                  },
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return 'Please enter your email';
+                                    } else {
+                                      return null;
                                     }
-                                    return '';
-                                  },
-                                  onSaved: (value) {
-                                    _email = value;
                                   },
                                 ),
                                 const SizedBox(
@@ -85,18 +112,18 @@ class _SigninScreenState extends State<SigninScreen> {
                                 TextButtonWidget(
                                   mainLabel: 'Enter Password',
                                   subLabel: 'Password',
+                                  onSaved: (value) {
+                                    password = value!;
+                                  },
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return 'Please enter your password';
                                     } else if (value.length < 6) {
                                       return 'Password should be more than 6 characters';
                                     }
-                                    return '';
+                                    return null;
                                   },
                                   obscuredText: !passwordVisible,
-                                  onSaved: (value) {
-                                    _password = value;
-                                  },
                                   suffixIcon: IconButton(
                                       onPressed: () {
                                         setState(() {
@@ -158,8 +185,49 @@ class _SigninScreenState extends State<SigninScreen> {
                                     if (_formKey.currentState!.validate()) {
                                       _formKey.currentState!.save();
 
-                                      debugPrint('Email: $_email');
-                                      debugPrint('Message: $_password');
+                                      debugPrint('Email: $email');
+                                      debugPrint('Password: $password');
+                                      try {
+                                        setState(() {
+                                          isLoading = true;
+                                        });
+                                        isLoading
+                                            ? null
+                                            : Provider.of<AuthProvider>(context)
+                                                .signIn(email);
+                                        Provider.of<AuthProvider>(context)
+                                            .signIn(email);
+
+                                        if (mounted) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                                content: Text(
+                                                    'Check your email for a login link!')),
+                                          );
+                                        }
+                                      } on AuthException catch (error) {
+                                        SnackBar(
+                                          content: Text(error.message),
+                                          backgroundColor: Theme.of(context)
+                                              .colorScheme
+                                              .error,
+                                        );
+                                      } catch (error) {
+                                        SnackBar(
+                                          content: const Text(
+                                              'Unexpected error occurred'),
+                                          backgroundColor: Theme.of(context)
+                                              .colorScheme
+                                              .error,
+                                        );
+                                      } finally {
+                                        if (mounted) {
+                                          setState(() {
+                                            isLoading = false;
+                                          });
+                                        }
+                                      }
                                     }
                                   },
                                   buttonText: 'Sign in',

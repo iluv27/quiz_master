@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_master/services/supabase_services.dart';
 import 'package:quiz_master/settings_screens/app_version.dart';
 import 'package:quiz_master/settings_screens/privacy_policy.dart';
 import 'package:quiz_master/settings_screens/support.dart';
@@ -140,10 +141,13 @@ class _UserScreenState extends State<UserScreen> {
                       ? Icons.light_mode
                       : Icons.dark_mode,
                   trailingIcon: const ToggleSwitch()),
-              const RepeatedListTile(
+              RepeatedListTile(
                 title: 'Log Out',
                 icon: Icons.logout,
-                trailingIcon: SizedBox(),
+                trailingIcon: const SizedBox(),
+                onPressed: () {
+                  Provider.of<AuthProvider>(context, listen: false).signOut();
+                },
               ),
             ],
           ),

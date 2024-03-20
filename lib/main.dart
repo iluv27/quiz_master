@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_master/screens/home_screen.dart';
+import 'package:quiz_master/services/supabase_services.dart';
 import 'package:quiz_master/splash_screen.dart';
 import 'package:quiz_master/theme/provider.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
@@ -23,6 +24,7 @@ Future<void> main() async {
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        ChangeNotifierProvider(create: (context) => AuthProvider()),
       ],
       child: const MyApp(),
     ),
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       themeMode: ThemeMode.system,
       theme: Provider.of<ThemeProvider>(context).themeData,
-      home: const HomePage(),
+      home: const SplashScreen(),
     );
   }
 }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quiz_master/register/register_widgets.dart';
 import 'package:quiz_master/register/signin_screen.dart';
 import 'package:quiz_master/register/verify_code.dart';
+import 'package:quiz_master/services/supabase_services.dart';
 import 'package:quiz_master/theme/theme.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -18,6 +20,7 @@ class _SignupScreenState extends State<SignupScreen> {
   String? _password;
   bool passwordVisible = false;
   bool _isCheckboxChecked = false;
+  bool _isLoading = false;
 
   @override
   void dispose() {
@@ -70,7 +73,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     if (value!.isEmpty) {
                                       return 'Please enter your name';
                                     }
-                                    return '';
+                                    return null;
                                   },
                                   onSaved: (value) {
                                     _name = value;
@@ -85,12 +88,13 @@ class _SignupScreenState extends State<SignupScreen> {
                                   validator: (value) {
                                     if (value!.isEmpty) {
                                       return 'Please enter your email';
-                                    } else if (value.isEmailValid() == false) {
-                                      return 'Invalid mail';
-                                    } else if (value.isEmailValid() == true) {
-                                      return '';
                                     }
-                                    return '';
+                                    // else if (value.isEmailValid() == false) {
+                                    //   return 'Invalid mail';
+                                    // } else if (value.isEmailValid() == true) {
+                                    //   return '';
+                                    // }
+                                    return null;
                                   },
                                   onSaved: (value) {
                                     _email = value;
@@ -108,7 +112,7 @@ class _SignupScreenState extends State<SignupScreen> {
                                     } else if (value.length < 6) {
                                       return 'Password should be more than 6 characters';
                                     }
-                                    return '';
+                                    return null;
                                   },
                                   obscuredText: !passwordVisible,
                                   onSaved: (value) {
@@ -142,26 +146,64 @@ class _SignupScreenState extends State<SignupScreen> {
                                   },
                                 ),
                                 const SizedBox(height: 40),
-                                SignupButton(
-                                  onPressed: _isCheckboxChecked
-                                      ? () {
-                                          if (_formKey.currentState!
-                                              .validate()) {
-                                            _formKey.currentState!.save();
+                                _isLoading
+                                    ? const Center(
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                            Colors.orange,
+                                          ),
+                                        ),
+                                      )
+                                    : SignupButton(
+                                        onPressed: _isLoading
+                                            ? null
+                                            : _isCheckboxChecked
+                                                ? () {
+                                                    if (_formKey.currentState!
+                                                        .validate()) {
+                                                      _formKey.currentState!
+                                                          .save();
 
-                                            debugPrint('Name: $_name');
-                                            debugPrint('Email: $_email');
-                                            debugPrint('Message: $_password');
-                                            Navigator.pushReplacement(context,
-                                                MaterialPageRoute(
-                                                    builder: (context) {
-                                              return const VerifyCode();
-                                            }));
-                                          }
-                                        }
-                                      : null,
-                                  buttonText: 'Get Started',
-                                ),
+                                                      debugPrint(
+                                                          'Name: $_name');
+                                                      debugPrint(
+                                                          'Email: $_email');
+                                                      debugPrint(
+                                                          'Message: $_password');
+
+                                                      setState(() {
+                                                        _isLoading = true;
+                                                      });
+
+                                                      Provider.of<AuthProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .signUp(
+                                                              _name!,
+                                                              _email!,
+                                                              _password!);
+
+                                                      setState(() {
+                                                        _isLoading = false;
+                                                      });
+
+                                                      Navigator.pushReplacement(
+                                                          context,
+                                                          MaterialPageRoute(
+                                                              builder:
+                                                                  (context) {
+                                                        return VerifyCode(
+                                                          email: _email,
+                                                          name: _name,
+                                                          password: _password,
+                                                        );
+                                                      }));
+                                                    }
+                                                  }
+                                                : null,
+                                        buttonText: 'Get Started',
+                                      ),
                               ],
                             ),
                           ),
@@ -193,6 +235,8 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                   ),
                 ),
+
+                //  LOG IN TEXT
                 Positioned(
                     bottom: 0,
                     left: 0,
@@ -213,13 +257,5 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
           )),
     );
-  }
-}
-
-extension EmailValidator on String {
-  bool isEmailValid() {
-    return RegExp(
-            r'^[a-zA-Z0-9]+[\_\-\.]*[a-zA-Z0-9]*[@][a-zA-Z0-9]{2,}[\.][a-zA-Z]{2,3}$')
-        .hasMatch(this);
   }
 }
