@@ -1,6 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:quiz_master/register/signin_screen.dart';
 import 'package:quiz_master/register/signup_screen.dart';
+import 'package:quiz_master/services/supabase_services.dart';
 import 'package:quiz_master/theme/theme.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -18,6 +23,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     'images/onboarding/onboardingimage2.png',
     'images/onboarding/onboardingimage3.png'
   ];
+
+  @override
+  void initState() {
+    authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
+      if (redirecting) return;
+      final session = data.session;
+      if (session != null) {
+        redirecting = true;
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) {
+          return const SigninScreen();
+        }));
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    authStateSubscription.cancel();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -145,6 +172,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       _onLastPage();
     }
   }
+
+  late final StreamSubscription<AuthState> authStateSubscription;
+  bool redirecting = false;
 
   void _onLastPage() {
     // Perform a different action on the last page

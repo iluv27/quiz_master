@@ -57,7 +57,6 @@ class _ReactQuizState extends State<ReactQuiz> {
                   itemBuilder: (context, index) {
                     return SubcategModel(
                       mainCategName: 'React.js',
-                      subCategName: react[index],
                       questionTotal: htmlQuestions.length,
                       assetName: 'images/quizzes_cat/react/react$index.png',
                       subCategLabel: react[index],

@@ -3,27 +3,32 @@ import 'package:flutter/material.dart';
 // Categoties
 class CategoryAvatars extends StatelessWidget {
   const CategoryAvatars(
-      {super.key, required this.image, required this.label, this.onTapped});
+      {super.key,
+      required this.image,
+      required this.label,
+      required this.size,
+      this.onTapped});
 
   final String image;
   final String label;
   final Function()? onTapped;
+  final double size;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: onTapped,
       child: Column(
         children: [
           Container(
-            height: 40,
-            width: 40,
+            height: size,
+            width: size,
             margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
             decoration: BoxDecoration(
                 color: Theme.of(context).colorScheme.scrim,
                 borderRadius: BorderRadius.circular(100000),
                 image: DecorationImage(
-                  image: AssetImage(image),
+                  image: NetworkImage(image, scale: 4),
                 )),
           ),
           Text(
@@ -32,39 +37,6 @@ class CategoryAvatars extends StatelessWidget {
           )
         ],
       ),
-    );
-  }
-}
-
-class CategoryAvatars2 extends StatelessWidget {
-  const CategoryAvatars2(
-      {super.key, required this.image, required this.label, this.onTapped});
-
-  final String image;
-  final String label;
-
-  final Function()? onTapped;
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 35,
-          width: 35,
-          margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-          decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.scrim,
-              borderRadius: BorderRadius.circular(100000),
-              image: DecorationImage(
-                image: AssetImage(image),
-              )),
-        ),
-        Text(
-          label,
-          style: Theme.of(context).textTheme.bodySmall,
-        )
-      ],
     );
   }
 }

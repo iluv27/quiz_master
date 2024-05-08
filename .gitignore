@@ -12,6 +12,8 @@ migrate_working_dir/
 /services
 services
 services/
+main
+/main
 
 # IntelliJ related
 *.iml

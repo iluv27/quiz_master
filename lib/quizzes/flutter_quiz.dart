@@ -24,7 +24,7 @@ class _FlutterQuizState extends State<FlutterQuiz> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CategHeaderLabel(
+                const CategHeaderLabel(
                   headerLabel: 'Flutter',
                 ),
                 SizedBox(
@@ -40,7 +40,6 @@ class _FlutterQuizState extends State<FlutterQuiz> {
                         itemBuilder: (context, index) {
                           return SubcategModel(
                             mainCategName: 'Flutter',
-                            subCategName: beauty[index],
                             questionTotal: htmlQuestions.length,
                             assetName:
                                 'images/quizzes_cat/beauty/beauty$index.jpg',

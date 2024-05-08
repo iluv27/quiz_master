@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:quiz_master/questions/quiz.dart';
+import 'package:quiz_master/services/database.dart';
 import 'package:quiz_master/theme/theme.dart';
 import '../widgets/home_widgets.dart';
 
@@ -11,6 +13,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -64,45 +71,49 @@ class _HomeScreenState extends State<HomeScreen> {
             style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
+        // for (var category in categories)
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 15.0),
-          child: SizedBox(
-            height: 80,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: const [
-                CategoryAvatars(
-                  image: 'images/html.png',
-                  label: 'HTML',
-                ),
-                CategoryAvatars(
-                  image: 'images/javascript.png',
-                  label: 'Javascript',
-                ),
-                CategoryAvatars(
-                  image: 'images/react.png',
-                  label: 'React',
-                ),
-                CategoryAvatars(
-                  image: 'images/css.png',
-                  label: 'CSS',
-                ),
-                CategoryAvatars(
-                  image: 'images/react.png',
-                  label: 'React',
-                ),
-                CategoryAvatars(
-                  image: 'images/css.png',
-                  label: 'CSS',
-                ),
-                CategoryAvatars(
-                  image: 'images/javascript.png',
-                  label: 'Javascript',
-                ),
-              ],
-            ),
-          ),
-        ),
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: SizedBox(
+                height: 80,
+                child: ListView.builder(
+                  itemCount:
+                      Provider.of<DatabaseProvider>(context, listen: false)
+                          .categories
+                          .length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return CategoryAvatars(
+                      image:
+                          Provider.of<DatabaseProvider>(context, listen: false)
+                                  .categories[index]['category_image'] ??
+                              '',
+                      label:
+                          Provider.of<DatabaseProvider>(context, listen: false)
+                                  .categories[index]['category_name'] ??
+                              '',
+                      size: 40,
+                      onTapped: () async {
+                        Provider.of<DatabaseProvider>(context, listen: false)
+                            .fetchSubCategoriesData(
+                                Provider.of<DatabaseProvider>(context,
+                                            listen: false)
+                                        .categories[index]['id'] ??
+                                    '');
+
+                        // debugPrint('Gotten here TWO');
+                        // try {
+                        //   debugPrint(
+                        //       'Sub Category 22 full displayed data: ${await Provider.of<DatabaseProvider>(context, listen: false).subCategories}');
+                        // } catch (e) {
+                        //   debugPrint(
+                        //       'There was an error with Sub Category 22: $e');
+                        // }
+                        // debugPrint('Gotten here THREE');
+                      },
+                    );
+                  },
+                ))),
 
         // CARD Section
         Padding(
@@ -148,6 +159,22 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           ElevatedButton(
                             onPressed: () {
+                              debugPrint('Gotten here 26t67');
+
+                              // debugPrint(
+                              //     'Categories Data1: ${categories![index]}');
+
+                              // debugPrint(
+                              //     'Categories Image1: ${category['category_image']}');
+                              // debugPrint(
+                              //     'Categories Name 1: ${category['category_name']}');
+                              // debugPrint(
+                              //     'Categories Image 2: ${category['category_image'][index]}');
+                              // debugPrint(
+                              //     'Categories Name 2: ${category['category_name'][index]}');
+                              // debugPrint(
+                              //     'Category: ${Provider.of<DatabaseProvider>(context, listen: false).category}');
+
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return const QuizScreen();

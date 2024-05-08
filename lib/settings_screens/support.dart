@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_master/register/register_widgets.dart';
 import 'package:quiz_master/theme/provider.dart';
 import 'package:quiz_master/theme/theme.dart';
+import 'package:quiz_master/widgets/profile_widgets.dart';
 
 class SupportPage extends StatefulWidget {
   const SupportPage({super.key});
@@ -18,6 +20,12 @@ class _SupportPageState extends State<SupportPage> {
   String? _message;
 
   final List<String> _categories = ['General', 'Technical', 'Billing'];
+
+  @override
+  void dispose() {
+    super.dispose();
+    _formKey;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -74,53 +82,57 @@ class _SupportPageState extends State<SupportPage> {
                     },
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 25,
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Name'),
+                  SettingsTextField(
+                    mainLabel: 'Enter Your Name',
+                    subLabel: 'Full Name',
+                    onSaved: (value) {
+                      _name = value!;
+                    },
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter your name';
+                      } else {
+                        return null;
                       }
-                      return null;
-                    },
-                    onSaved: (value) {
-                      _name = value;
                     },
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 25,
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Email'),
+                  SettingsTextField(
+                    mainLabel: 'Enter Your Mail',
+                    subLabel: 'Email',
+                    onSaved: (value) {
+                      _email = value;
+                    },
                     validator: (value) {
                       if (value!.isEmpty || !value.contains('@')) {
                         return 'Please enter a valid email address';
                       }
                       return null;
                     },
-                    onSaved: (value) {
-                      _email = value;
-                    },
                   ),
                   const SizedBox(
-                    height: 15,
+                    height: 25,
                   ),
-                  TextFormField(
-                    decoration: const InputDecoration(labelText: 'Message'),
-                    maxLines: 3,
+                  SettingsTextField(
+                    maximumLines: 4,
+                    mainLabel: 'Leave a Message',
+                    subLabel: 'Leave a Message',
+                    onSaved: (value) {
+                      _message = value;
+                    },
                     validator: (value) {
                       if (value!.isEmpty) {
                         return 'Please enter your message';
                       }
                       return null;
                     },
-                    onSaved: (value) {
-                      _message = value;
-                    },
                   ),
-                  const SizedBox(height: 40),
-                  ElevatedButton(
+                  const SizedBox(height: 50),
+                  SignupButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
@@ -130,7 +142,7 @@ class _SupportPageState extends State<SupportPage> {
                         debugPrint('Message: $_message');
                       }
                     },
-                    child: const Text('Submit'),
+                    buttonText: 'Submit Message',
                   ),
                 ],
               ),

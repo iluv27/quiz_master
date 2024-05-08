@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_master/services/database.dart';
 import 'package:quiz_master/theme/provider.dart';
 import 'package:quiz_master/theme/theme.dart';
 import 'package:quiz_master/widgets/home_widgets.dart';
@@ -12,7 +13,6 @@ import '../quizzes/node_quiz.dart';
 import '../quizzes/html_css_quiz.dart';
 import '../quizzes/express_quiz.dart';
 import '../quizzes/javascript_quiz.dart';
-import '../utilities/categ_list.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
@@ -77,36 +77,55 @@ class _QuizScreenState extends State<QuizScreen> {
 
   SizedBox topNavigator(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.08,
+      height: MediaQuery.of(context).size.height * 0.09,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
-          itemCount: mainQuizCategory.length,
+          itemCount: Provider.of<DatabaseProvider>(context, listen: false)
+              .categories
+              .length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
                 setState(() {
                   selIndex = index;
                 });
-                debugPrint("$index");
                 pageController.jumpToPage(index);
+                debugPrint("MAJOR INDEX IS $index");
               },
               child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.only(
-                        topLeft: Radius.elliptical(30, 30),
-                        topRight: Radius.elliptical(30, 30)),
-                    color: Provider.of<ThemeProvider>(context, listen: false)
-                                .themeData ==
-                            lightMode
-                        ? index == selIndex
-                            ? Colors.white
-                            : Colors.transparent
-                        : index == selIndex
-                            ? const Color(0xff111111)
-                            : Colors.transparent,
-                  ),
-                  child: mainQuizCategory[index]),
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.only(
+                      topLeft: Radius.elliptical(30, 30),
+                      topRight: Radius.elliptical(30, 30)),
+                  color: Provider.of<ThemeProvider>(context, listen: false)
+                              .themeData ==
+                          lightMode
+                      ? index == selIndex
+                          ? Colors.white
+                          : Colors.transparent
+                      : index == selIndex
+                          ? const Color(0xff111111)
+                          : Colors.transparent,
+                ),
+                child: CategoryAvatars(
+                  image: Provider.of<DatabaseProvider>(context, listen: false)
+                          .categories[index]['category_image'] ??
+                      '',
+                  label: Provider.of<DatabaseProvider>(context, listen: false)
+                          .categories[index]['category_name'] ??
+                      '',
+                  size: 35,
+                  onTapped: () {
+                    Provider.of<DatabaseProvider>(context, listen: false)
+                        .fetchSubCategoriesData(Provider.of<DatabaseProvider>(
+                                    context,
+                                    listen: false)
+                                .categories[index]['id'] ??
+                            '');
+                  },
+                ),
+              ),
             );
           }),
     );

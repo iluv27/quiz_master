@@ -1,7 +1,11 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_master/register/signin_screen.dart';
 import 'package:quiz_master/services/supabase_services.dart';
 import 'package:quiz_master/settings_screens/app_version.dart';
+import 'package:quiz_master/settings_screens/edit_profile.dart';
 import 'package:quiz_master/settings_screens/privacy_policy.dart';
 import 'package:quiz_master/settings_screens/support.dart';
 import 'package:quiz_master/settings_screens/terms.dart';
@@ -46,14 +50,36 @@ class _UserScreenState extends State<UserScreen> {
         child: Padding(
           padding: const EdgeInsets.only(left: 30.0, top: 15, bottom: 10),
           child: Row(crossAxisAlignment: CrossAxisAlignment.center, children: [
-            const CircleAvatar(
+            CircleAvatar(
               radius: 30,
-              backgroundColor: Colors.grey,
-              child: Icon(
-                Icons.person,
-                color: Colors.white,
-                size: 30,
-              ),
+              backgroundColor: Provider.of<AuthProvider>(context, listen: false)
+                          .profileImage !=
+                      ''
+                  ? null
+                  : Provider.of<ThemeProvider>(context, listen: false)
+                              .themeData ==
+                          lightMode
+                      ? getRandomColorLight()
+                      : getRandomColorDark(),
+              child: Provider.of<AuthProvider>(context, listen: false)
+                          .profileImage !=
+                      ''
+                  ? null
+                  : Text(
+                      Provider.of<AuthProvider>(context, listen: false)
+                          .getUserInitials(),
+                      style: TextStyle(
+                          color:
+                              Provider.of<ThemeProvider>(context, listen: false)
+                                          .themeData ==
+                                      lightMode
+                                  ? Colors.white
+                                  : const Color(0xff111111),
+                          fontSize: 18,
+                          letterSpacing: -1,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w600),
+                    ),
               // backgroundImage: AssetImage('images/css.png'),
             ),
             Padding(
@@ -64,13 +90,16 @@ class _UserScreenState extends State<UserScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Guest',
+                        Provider.of<AuthProvider>(context, listen: false)
+                            .profileName,
                         style: Theme.of(context).textTheme.displayLarge,
                       ),
                       const SizedBox(
                         height: 3,
                       ),
-                      Text('abcdef@gmail.com',
+                      Text(
+                          Provider.of<AuthProvider>(context, listen: false)
+                              .profileEmail,
                           style: Theme.of(context).textTheme.displaySmall)
                     ]),
               ),
@@ -85,9 +114,14 @@ class _UserScreenState extends State<UserScreen> {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              const RepeatedListTile(
+              RepeatedListTile(
                 title: 'Edit Profile',
                 icon: Icons.email,
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return const EditProfile();
+                  }));
+                },
               ),
               const RepeatedListTile(
                 title: 'Reset Progress',
@@ -145,8 +179,52 @@ class _UserScreenState extends State<UserScreen> {
                 title: 'Log Out',
                 icon: Icons.logout,
                 trailingIcon: const SizedBox(),
-                onPressed: () {
-                  Provider.of<AuthProvider>(context, listen: false).signOut();
+                onPressed: () async {
+                  await showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        contentPadding: const EdgeInsets.all(20),
+                        titlePadding: const EdgeInsets.only(
+                            top: 30, left: 100, right: 100),
+                        title: const SizedBox(
+                          height: 60,
+                          width: 60,
+                          child: CircularProgressIndicator(
+                            color: AppColors.primary,
+                          ),
+                        ),
+                        content: const Text(
+                          'Logging out...',
+                          style: TextStyle(
+                              height: 1.5,
+                              fontWeight: FontWeight.normal,
+                              fontSize: 16),
+                          textAlign: TextAlign.center,
+                        ),
+                        actions: [
+                          Center(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: const Text('Cancel'),
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+
+                  // ignore: use_build_context_synchronously
+                  await Provider.of<AuthProvider>(context, listen: false)
+                      .signOut();
+                  // ignore: use_build_context_synchronously
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) {
+                    return const SigninScreen();
+                  }));
                 },
               ),
             ],
@@ -155,4 +233,26 @@ class _UserScreenState extends State<UserScreen> {
       ),
     ]);
   }
+}
+
+Color getRandomColorLight() {
+  const List<Color> colors = [
+    Color.fromARGB(255, 208, 105, 14),
+    Color.fromARGB(255, 209, 106, 15),
+    Color.fromARGB(255, 154, 81, 17),
+    Color.fromARGB(255, 115, 54, 1),
+  ];
+
+  return colors[Random().nextInt(colors.length)];
+}
+
+Color getRandomColorDark() {
+  const List<Color> colors = [
+    Color.fromARGB(255, 255, 160, 77),
+    Color.fromARGB(255, 198, 135, 79),
+    Color.fromARGB(255, 255, 119, 0),
+    Color.fromARGB(255, 228, 146, 75),
+  ];
+
+  return colors[Random().nextInt(colors.length)];
 }

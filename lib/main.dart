@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quiz_master/screens/home_screen.dart';
+import 'package:quiz_master/services/database.dart';
 import 'package:quiz_master/services/supabase_services.dart';
 import 'package:quiz_master/splash_screen.dart';
 import 'package:quiz_master/theme/provider.dart';
@@ -14,11 +15,14 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
+
   runApp(
     MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (context) => ThemeProvider()),
         ChangeNotifierProvider(create: (context) => AuthProvider()),
+        ChangeNotifierProvider(create: (context) => DatabaseProvider()),
       ],
       child: const MyApp(),
     ),
@@ -54,8 +58,17 @@ class _HomePageState extends State<HomePage> {
     HistoryScreen(),
     UserScreen()
   ];
+
   @override
   Widget build(BuildContext context) {
+    Provider.of<AuthProvider>(context).getProfile();
+    Provider.of<DatabaseProvider>(context).fetchCategoriesData();
+
+    // for (var category
+    //     in Provider.of<DatabaseProvider>(context, listen: false).categories) {
+    //   Provider.of<DatabaseProvider>(context, listen: false)
+    //       .fetchSubCategoriesData(category['id']);
+    // }
     return SafeArea(
       child: Scaffold(
         body: screens[selectedScreen],

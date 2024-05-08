@@ -41,7 +41,6 @@ class _PythonQuizState extends State<PythonQuiz> {
                           return SubcategModel(
                             mainCategName: 'Python',
                             questionTotal: htmlQuestions.length,
-                            subCategName: bags[index],
                             assetName: 'images/quizzes_cat/bags/bags$index.jpg',
                             subCategLabel: bags[index],
                           );

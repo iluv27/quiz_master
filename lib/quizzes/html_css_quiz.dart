@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_master/services/database.dart';
 import '../questions/quiz_sect.dart';
 import '../utilities/categ_list.dart';
 import '../widgets/categ_widgets.dart';
@@ -19,14 +21,16 @@ class _HtmlCssQuizState extends State<HtmlCssQuiz> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CategHeaderLabel(
+          const CategHeaderLabel(
             headerLabel: 'HTML & CSS',
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.63,
             width: MediaQuery.of(context).size.width,
             child: GridView.builder(
-                itemCount: html.length,
+                itemCount: Provider.of<DatabaseProvider>(context, listen: false)
+                    .subCategoryNames
+                    .length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     mainAxisSpacing: 15,
                     crossAxisSpacing: 10,
@@ -35,11 +39,15 @@ class _HtmlCssQuizState extends State<HtmlCssQuiz> {
 
                     childAspectRatio: 0.85),
                 itemBuilder: (context, index) {
+                  // Get the subCategoryTitles from the DatabaseProvider
+
+                  // ignore: curly_braces_in_flow_control_structures
                   return SubcategModel(
                     mainCategName: 'HTML & CSS',
-                    subCategName: html[index],
                     assetName: 'images/quizzes_cat/html/html$index.png',
-                    subCategLabel: html[index],
+                    subCategLabel:
+                        Provider.of<DatabaseProvider>(context, listen: false)
+                            .subCategoryNames[index],
                     categColor: colors[index],
                     questionTotal: htmlQuestions[0].length,
                   );

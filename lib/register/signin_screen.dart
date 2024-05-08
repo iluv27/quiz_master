@@ -1,13 +1,11 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_master/main.dart';
 import 'package:quiz_master/register/forgot_password.dart';
 import 'package:quiz_master/register/register_widgets.dart';
 import 'package:quiz_master/register/signup_screen.dart';
 import 'package:quiz_master/services/supabase_services.dart';
 import 'package:quiz_master/theme/theme.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SigninScreen extends StatefulWidget {
   const SigninScreen({super.key});
@@ -22,29 +20,10 @@ class _SigninScreenState extends State<SigninScreen> {
   String password = '';
   bool passwordVisible = false;
   bool _isCheckboxChecked = true;
-  late final StreamSubscription<AuthState> authStateSubscription;
-  bool redirecting = false;
-
-  @override
-  void initState() {
-    authStateSubscription = supabase.auth.onAuthStateChange.listen((data) {
-      if (redirecting) return;
-      final session = data.session;
-      if (session != null) {
-        redirecting = true;
-        Navigator.of(context)
-            .pushReplacement(MaterialPageRoute(builder: (context) {
-          return const SignupScreen();
-        }));
-      }
-    });
-    super.initState();
-  }
 
   @override
   void dispose() {
     _formKey;
-    authStateSubscription.cancel();
     super.dispose();
   }
 
@@ -187,47 +166,15 @@ class _SigninScreenState extends State<SigninScreen> {
 
                                       debugPrint('Email: $email');
                                       debugPrint('Password: $password');
-                                      try {
-                                        setState(() {
-                                          isLoading = true;
-                                        });
-                                        isLoading
-                                            ? null
-                                            : Provider.of<AuthProvider>(context)
-                                                .signIn(email);
-                                        Provider.of<AuthProvider>(context)
-                                            .signIn(email);
 
-                                        if (mounted) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            const SnackBar(
-                                                content: Text(
-                                                    'Check your email for a login link!')),
-                                          );
-                                        }
-                                      } on AuthException catch (error) {
-                                        SnackBar(
-                                          content: Text(error.message),
-                                          backgroundColor: Theme.of(context)
-                                              .colorScheme
-                                              .error,
-                                        );
-                                      } catch (error) {
-                                        SnackBar(
-                                          content: const Text(
-                                              'Unexpected error occurred'),
-                                          backgroundColor: Theme.of(context)
-                                              .colorScheme
-                                              .error,
-                                        );
-                                      } finally {
-                                        if (mounted) {
-                                          setState(() {
-                                            isLoading = false;
-                                          });
-                                        }
-                                      }
+                                      Provider.of<AuthProvider>(context,
+                                              listen: false)
+                                          .signIn(email, password);
+
+                                      Navigator.pushReplacement(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return const HomePage();
+                                      }));
                                     }
                                   },
                                   buttonText: 'Sign in',

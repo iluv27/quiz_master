@@ -38,7 +38,7 @@ class _JavascriptQuizState extends State<JavascriptQuiz> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CategHeaderLabel(
+          const CategHeaderLabel(
             headerLabel: 'JAVASCRIPT',
           ),
           SizedBox(
@@ -56,7 +56,6 @@ class _JavascriptQuizState extends State<JavascriptQuiz> {
                   itemBuilder: (context, index) {
                     return SubcategModel(
                       mainCategName: 'JAVASCRIPT',
-                      subCategName: javascript[index],
                       questionTotal: htmlQuestions.length,
                       assetName:
                           'images/quizzes_cat/javascript/javascript$index.png',

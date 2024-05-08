@@ -42,7 +42,6 @@ class _NodeQuizState extends State<NodeQuiz> {
                           return SubcategModel(
                             mainCategName: 'Node.js',
                             questionTotal: htmlQuestions.length,
-                            subCategName: kids[index],
                             assetName: 'images/quizzes_cat/kids/kids$index.jpg',
                             subCategLabel: kids[index],
                           );

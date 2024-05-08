@@ -25,7 +25,7 @@ class _JavaQuizState extends State<JavaQuiz> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CategHeaderLabel(
+                const CategHeaderLabel(
                   headerLabel: 'JAVA',
                 ),
                 SizedBox(
@@ -41,7 +41,6 @@ class _JavaQuizState extends State<JavaQuiz> {
                         itemBuilder: (context, index) {
                           return SubcategModel(
                             mainCategName: 'JAVA',
-                            subCategName: homeandgarden[index],
                             questionTotal: htmlQuestions.length,
                             assetName:
                                 'images/quizzes_cat/homegarden/home$index.jpg',

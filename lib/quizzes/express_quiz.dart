@@ -25,7 +25,7 @@ class _ExpressQuizState extends State<ExpressQuiz> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CategHeaderLabel(
+                const CategHeaderLabel(
                   headerLabel: 'Express.js',
                 ),
                 SizedBox(
@@ -41,7 +41,6 @@ class _ExpressQuizState extends State<ExpressQuiz> {
                         itemBuilder: (context, index) {
                           return SubcategModel(
                             mainCategName: 'Express.js',
-                            subCategName: shoes[index],
                             questionTotal: htmlQuestions.length,
                             assetName:
                                 'images/quizzes_cat/shoes/shoes$index.jpg',

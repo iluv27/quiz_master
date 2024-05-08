@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:quiz_master/questions/quiz_sect.dart';
+import 'package:quiz_master/services/database.dart';
+import 'package:quiz_master/services/quiz_service.dart';
 import 'package:quiz_master/theme/theme.dart';
-import 'package:quiz_master/widgets/subcateg_products.dart';
 
 class SubcategModel extends StatelessWidget {
   const SubcategModel(
       {super.key,
       required this.assetName,
       required this.mainCategName,
-      required this.subCategName,
       required this.subCategLabel,
       required this.questionTotal,
       this.categColor});
 
   final String mainCategName;
-  final String subCategName;
+
   final String assetName;
   final String subCategLabel;
   final int questionTotal;
@@ -82,9 +84,9 @@ class SubcategModel extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) {
-                      return SubCategProducts(
-                        maincategName: mainCategName,
-                        subcategName: subCategName,
+                      return QuizScreen222(
+                        questionTitle: subCategLabel,
+                        questionQuestion: htmlQuestions,
                       );
                     }));
                   },
@@ -109,18 +111,35 @@ class SubcategModel extends StatelessWidget {
 
 // ignore: must_be_immutable
 class CategHeaderLabel extends StatelessWidget {
-  CategHeaderLabel({super.key, required this.headerLabel});
-
-  String headerLabel;
+  const CategHeaderLabel({super.key, required this.headerLabel});
+  final String headerLabel;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 15.0, bottom: 20),
-      child: Text(
-        headerLabel,
-        style: Theme.of(context).textTheme.displayLarge,
-      ),
-    );
+    return Consumer<DatabaseProvider>(builder: (context, databaseProvider, _) {
+      // Access categories list from DatabaseProvider
+      // List<Map<String, dynamic>> categories = databaseProvider.categories;
+
+      // Create a Column of Text widgets based on category_name values
+      return Padding(
+        padding: const EdgeInsets.only(top: 15.0, bottom: 20),
+        child: Text(
+          headerLabel,
+          // category['category_name'] ?? '', // Display category_name
+          style: Theme.of(context).textTheme.displayLarge,
+        ),
+        // Column(
+        //   crossAxisAlignment: CrossAxisAlignment.start,
+        //   children: [
+        //     for (var category in categories)
+        //       Text(
+        //         headerLabel,
+        //         // category['category_name'] ?? '', // Display category_name
+        //         style: Theme.of(context).textTheme.displayLarge,
+        //       ),
+        //   ],
+        // ),
+      );
+    });
   }
 }

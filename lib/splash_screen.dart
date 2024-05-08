@@ -2,7 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quiz_master/main.dart';
 import 'package:quiz_master/screens/onboarding_screen.dart';
+import 'package:quiz_master/services/supabase_services.dart';
 import 'package:quiz_master/theme/provider.dart';
 import 'package:quiz_master/theme/theme.dart';
 import 'package:shimmer/shimmer.dart';
@@ -40,13 +42,27 @@ class _SplashScreenState extends State<SplashScreen> {
     _navigateToMainScreen();
   }
 
+  Future<void> _redirect() async {
+    await Future.delayed(Duration.zero);
+    if (!mounted) {
+      return;
+    }
+
+    final session = supabase.auth.currentSession;
+    if (session != null) {
+      Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const SafeArea(child: HomePage())));
+    } else {
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => const SafeArea(child: OnboardingScreen())));
+    }
+  }
+
   void _navigateToMainScreen() async {
     // Add any delay or loading tasks here if needed
     await Future.delayed(const Duration(seconds: 2));
-
+    _redirect();
     // Replace 'MainScreen()' with the widget representing your main app screen
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (_) => const SafeArea(child: OnboardingScreen())));
   }
 
   @override

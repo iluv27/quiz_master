@@ -20,7 +20,7 @@ class _AngularQuizState extends State<AngularQuiz> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CategHeaderLabel(
+          const CategHeaderLabel(
             headerLabel: 'Angular.js',
           ),
           SizedBox(
@@ -38,7 +38,6 @@ class _AngularQuizState extends State<AngularQuiz> {
                   itemBuilder: (context, index) {
                     return SubcategModel(
                       mainCategName: 'Angular.js',
-                      subCategName: angular[index],
                       questionTotal: htmlQuestions.length,
                       assetName: 'images/quizzes_cat/angular/angular$index.png',
                       subCategLabel: angular[index],
