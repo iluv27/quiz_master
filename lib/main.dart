@@ -64,11 +64,6 @@ class _HomePageState extends State<HomePage> {
     Provider.of<AuthProvider>(context).getProfile();
     Provider.of<DatabaseProvider>(context).fetchCategoriesData();
 
-    // for (var category
-    //     in Provider.of<DatabaseProvider>(context, listen: false).categories) {
-    //   Provider.of<DatabaseProvider>(context, listen: false)
-    //       .fetchSubCategoriesData(category['id']);
-    // }
     return SafeArea(
       child: Scaffold(
         body: screens[selectedScreen],

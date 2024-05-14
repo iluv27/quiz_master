@@ -10,9 +10,9 @@ import '../quizzes/flutter_quiz.dart';
 import '../quizzes/react_quiz.dart';
 import '../quizzes/java_quiz.dart';
 import '../quizzes/node_quiz.dart';
-import '../quizzes/html_css_quiz.dart';
+import '../quizzes/html_quiz.dart';
 import '../quizzes/express_quiz.dart';
-import '../quizzes/javascript_quiz.dart';
+import '../quizzes/css_quiz.dart';
 
 class QuizScreen extends StatefulWidget {
   const QuizScreen({super.key});
@@ -76,6 +76,9 @@ class _QuizScreenState extends State<QuizScreen> {
   }
 
   SizedBox topNavigator(BuildContext context) {
+    final databaseProvider =
+        Provider.of<DatabaseProvider>(context, listen: false);
+
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.09,
       child: ListView.builder(
@@ -88,9 +91,9 @@ class _QuizScreenState extends State<QuizScreen> {
               onTap: () {
                 setState(() {
                   selIndex = index;
+                  databaseProvider.indexOfNumbers = index;
                 });
                 pageController.jumpToPage(index);
-                debugPrint("MAJOR INDEX IS $index");
               },
               child: Container(
                 height: 60,
@@ -117,12 +120,8 @@ class _QuizScreenState extends State<QuizScreen> {
                       '',
                   size: 35,
                   onTapped: () {
-                    Provider.of<DatabaseProvider>(context, listen: false)
-                        .fetchSubCategoriesData(Provider.of<DatabaseProvider>(
-                                    context,
-                                    listen: false)
-                                .categories[index]['id'] ??
-                            '');
+                    databaseProvider.fetchSubCategoriesData(databaseProvider
+                        .categories[databaseProvider.indexOfNumbers]['id']);
                   },
                 ),
               ),

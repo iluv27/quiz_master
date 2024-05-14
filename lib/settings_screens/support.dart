@@ -136,10 +136,6 @@ class _SupportPageState extends State<SupportPage> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();
-                        debugPrint('Category: $_selectedCategory');
-                        debugPrint('Name: $_name');
-                        debugPrint('Email: $_email');
-                        debugPrint('Message: $_message');
                       }
                     },
                     buttonText: 'Submit Message',

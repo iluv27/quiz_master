@@ -164,9 +164,6 @@ class _SigninScreenState extends State<SigninScreen> {
                                     if (_formKey.currentState!.validate()) {
                                       _formKey.currentState!.save();
 
-                                      debugPrint('Email: $email');
-                                      debugPrint('Password: $password');
-
                                       Provider.of<AuthProvider>(context,
                                               listen: false)
                                           .signIn(email, password);

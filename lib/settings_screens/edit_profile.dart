@@ -115,8 +115,6 @@ class _EditProfileState extends State<EditProfile> {
                   const SizedBox(height: 50),
                   SignupButton(
                     onPressed: () {
-                      debugPrint('Name: $_name');
-                      debugPrint('Email: $_profileImageUrl');
                       Provider.of<AuthProvider>(context, listen: false)
                           .updateProfile(_name, _profileImageUrl, context);
                     },

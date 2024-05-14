@@ -104,8 +104,6 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
-
-                                debugPrint('Email: $_email');
                               }
                             },
                             buttonText: 'Send',

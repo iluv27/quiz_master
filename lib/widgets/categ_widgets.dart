@@ -38,7 +38,7 @@ class SubcategModel extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Image.asset(
+          Image.network(
             assetName,
             width: 75,
             height: 75,

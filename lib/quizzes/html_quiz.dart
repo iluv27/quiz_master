@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quiz_master/services/database.dart';
+import 'package:quiz_master/widgets/shimmer_widgets.dart';
 import '../questions/quiz_sect.dart';
-import '../utilities/categ_list.dart';
 import '../widgets/categ_widgets.dart';
 
 class HtmlCssQuiz extends StatefulWidget {
@@ -14,7 +14,40 @@ class HtmlCssQuiz extends StatefulWidget {
 
 class _HtmlCssQuizState extends State<HtmlCssQuiz> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final databaseProvider =
+        Provider.of<DatabaseProvider>(context, listen: false);
+
+    databaseProvider.fetchSubCategoriesData(
+        databaseProvider.categories[databaseProvider.indexOfNumbers]['id']);
+    return Scaffold(
+      body: FutureBuilder(
+        future: databaseProvider.fetchSubCategoriesData(
+            databaseProvider.categories[databaseProvider.indexOfNumbers]['id']),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const SubCategoriesShimmer();
+          } else if (snapshot.hasError) {
+            return Center(
+              child: Text('Error: ${snapshot.error}'),
+            );
+          } else {
+            return _buildContent(context);
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildContent(BuildContext context) {
+    final databaseProvider =
+        Provider.of<DatabaseProvider>(context, listen: false);
+
     return SizedBox(
       height: MediaQuery.of(context).size.height * 1,
       width: MediaQuery.of(context).size.width * 1,
@@ -22,15 +55,13 @@ class _HtmlCssQuizState extends State<HtmlCssQuiz> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const CategHeaderLabel(
-            headerLabel: 'HTML & CSS',
+            headerLabel: 'HTML',
           ),
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.63,
             width: MediaQuery.of(context).size.width,
             child: GridView.builder(
-                itemCount: Provider.of<DatabaseProvider>(context, listen: false)
-                    .subCategoryNames
-                    .length,
+                itemCount: databaseProvider.subCategoryNames.length,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     mainAxisSpacing: 15,
                     crossAxisSpacing: 10,
@@ -40,15 +71,11 @@ class _HtmlCssQuizState extends State<HtmlCssQuiz> {
                     childAspectRatio: 0.85),
                 itemBuilder: (context, index) {
                   // Get the subCategoryTitles from the DatabaseProvider
-
-                  // ignore: curly_braces_in_flow_control_structures
                   return SubcategModel(
-                    mainCategName: 'HTML & CSS',
-                    assetName: 'images/quizzes_cat/html/html$index.png',
-                    subCategLabel:
-                        Provider.of<DatabaseProvider>(context, listen: false)
-                            .subCategoryNames[index],
-                    categColor: colors[index],
+                    mainCategName: 'HTML',
+                    assetName: databaseProvider.subCategoryImages[index],
+                    subCategLabel: databaseProvider.subCategoryNames[index],
+                    categColor: colors[index % colors.length],
                     questionTotal: htmlQuestions[0].length,
                   );
                 }),

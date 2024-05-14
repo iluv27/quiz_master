@@ -138,8 +138,6 @@ class _ResetPasswordState extends State<ResetPassword> {
                             onPressed: () {
                               if (_formKey.currentState!.validate()) {
                                 _formKey.currentState!.save();
-
-                                debugPrint('Password: $password');
                               }
                             },
                             buttonText: 'Continue',

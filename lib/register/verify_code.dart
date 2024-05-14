@@ -187,8 +187,6 @@ class _VerifyCodeState extends State<VerifyCode> {
                                   if (_formKey.currentState!.validate()) {
                                     _formKey.currentState!.save();
 
-                                    debugPrint('Code: $code');
-
                                     Provider.of<AuthProvider>(context,
                                             listen: false)
                                         .verifyOTP(

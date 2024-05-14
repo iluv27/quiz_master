@@ -165,13 +165,6 @@ class _SignupScreenState extends State<SignupScreen> {
                                                       _formKey.currentState!
                                                           .save();
 
-                                                      debugPrint(
-                                                          'Name: $_name');
-                                                      debugPrint(
-                                                          'Email: $_email');
-                                                      debugPrint(
-                                                          'Message: $_password');
-
                                                       setState(() {
                                                         _isLoading = true;
                                                       });
