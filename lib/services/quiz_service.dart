@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiz_master/questions/quiz_sect.dart';
 import 'package:quiz_master/services/completed.dart';
+import 'package:quiz_master/services/database.dart';
 import 'package:quiz_master/theme/provider.dart';
 import 'package:quiz_master/widgets/quiz_card.dart';
 import 'package:quiz_master/theme/theme.dart';
@@ -9,10 +9,14 @@ import 'package:quiz_master/theme/theme.dart';
 // ignore: must_be_immutable
 class QuizScreen222 extends StatefulWidget {
   QuizScreen222(
-      {super.key, required this.questionTitle, required this.questionQuestion});
+      {super.key,
+      required this.questionTitle,
+      required this.selectedAnswers,
+      required this.questionQuestion});
 
   List<String> selectedAnswers = [];
   final List<Map<String, dynamic>> questionQuestion;
+  // final List<Map<String, dynamic>> questionQuestion;
 
   String questionTitle;
 
@@ -44,7 +48,8 @@ class _QuizScreenState extends State<QuizScreen222> {
             onPressed: () {
               setState(() {
                 widget.selectedAnswers = [];
-                currentQuestionIndex = 0;
+                Provider.of<DatabaseProvider>(context, listen: false)
+                    .currentQuestionIndex = 0;
                 Navigator.pop(
                   context,
                 );
@@ -162,7 +167,9 @@ class _BuildQuizScreenState extends State<BuildQuizScreen> {
 
   void answerCorrection() {
     setState(() {
-      if (currentQuestionIndex == widget.questionQuestion.length - 1) {
+      if (Provider.of<DatabaseProvider>(context, listen: false)
+              .currentQuestionIndex ==
+          widget.questionQuestion.length - 1) {
         Navigator.pushReplacement(context,
             MaterialPageRoute(builder: ((context) {
           return BuildFinishedScreen(
@@ -171,8 +178,11 @@ class _BuildQuizScreenState extends State<BuildQuizScreen> {
             questionTitle: widget.questionTitle,
           );
         })));
-      } else if (currentQuestionIndex != widget.questionQuestion.length) {
-        currentQuestionIndex++;
+      } else if (Provider.of<DatabaseProvider>(context, listen: false)
+              .currentQuestionIndex !=
+          widget.questionQuestion.length) {
+        Provider.of<DatabaseProvider>(context, listen: false)
+            .currentQuestionIndex++;
       }
       _isButtonEnabled = false;
     });
@@ -194,10 +204,14 @@ class _BuildQuizScreenState extends State<BuildQuizScreen> {
       if (widget.selectedAnswers.isNotEmpty && selectedAnswer == answer) {
         widget.selectedAnswers[widget.selectedAnswers.length - 1] = answer;
       } else if (widget.selectedAnswers.isNotEmpty &&
-          widget.selectedAnswers.length > currentQuestionIndex) {
+          widget.selectedAnswers.length >
+              Provider.of<DatabaseProvider>(context, listen: false)
+                  .currentQuestionIndex) {
         selectedAnswer = widget.selectedAnswers.last;
       } else if (widget.selectedAnswers.isNotEmpty &&
-          widget.selectedAnswers.length == currentQuestionIndex) {
+          widget.selectedAnswers.length ==
+              Provider.of<DatabaseProvider>(context, listen: false)
+                  .currentQuestionIndex) {
         widget.selectedAnswers.add(answer);
       } else {
         widget.selectedAnswers.add(answer);
@@ -209,11 +223,15 @@ class _BuildQuizScreenState extends State<BuildQuizScreen> {
   MaterialStateProperty<Color> bgColor(answer) {
     if (selectedAnswer == answer &&
         answer ==
-            widget.questionQuestion[currentQuestionIndex]['correctAnswer']) {
+            widget.questionQuestion[
+                Provider.of<DatabaseProvider>(context, listen: false)
+                    .currentQuestionIndex]['correctAnswer']) {
       return MaterialStateProperty.all(const Color.fromARGB(255, 19, 194, 19));
     } else if (selectedAnswer == answer &&
         answer !=
-            widget.questionQuestion[currentQuestionIndex]['correctAnswer']) {
+            widget.questionQuestion[
+                Provider.of<DatabaseProvider>(context, listen: false)
+                    .currentQuestionIndex]['correctAnswer']) {
       return MaterialStateProperty.all(const Color.fromARGB(255, 223, 46, 46));
     } else if (selectedAnswer == answer) {
       return MaterialStateProperty.all(
@@ -241,7 +259,7 @@ class _BuildQuizScreenState extends State<BuildQuizScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Question ${currentQuestionIndex + 1}/${widget.questionQuestion.length}',
+                    'Question ${Provider.of<DatabaseProvider>(context, listen: false).currentQuestionIndex + 1}/${widget.questionQuestion.length}',
                     style: TextStyle(
                         fontSize: 16,
                         fontWeight: FontWeight.bold,
@@ -262,8 +280,10 @@ class _BuildQuizScreenState extends State<BuildQuizScreen> {
                                   lightMode
                               ? const Color.fromARGB(92, 99, 216, 99)
                               : const Color.fromARGB(174, 99, 216, 99),
-                      value: currentQuestionIndex /
-                          (widget.questionQuestion.length - 1),
+                      value:
+                          Provider.of<DatabaseProvider>(context, listen: false)
+                                  .currentQuestionIndex /
+                              (widget.questionQuestion.length - 1),
                       strokeWidth: 4.5,
                       valueColor: AlwaysStoppedAnimation<Color>(
                           Provider.of<ThemeProvider>(context, listen: false)
@@ -282,7 +302,9 @@ class _BuildQuizScreenState extends State<BuildQuizScreen> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  widget.questionQuestion[currentQuestionIndex]['question'],
+                  widget.questionQuestion[
+                      Provider.of<DatabaseProvider>(context, listen: false)
+                          .currentQuestionIndex]['question'],
                   style: TextStyle(
                     height: 1.4,
                     fontSize: 20,
@@ -296,8 +318,7 @@ class _BuildQuizScreenState extends State<BuildQuizScreen> {
                 ),
               ),
             ),
-            for (var answer in widget.questionQuestion[currentQuestionIndex]
-                ['answers'])
+            for (var answer in widget.selectedAnswers)
               Padding(
                 padding: const EdgeInsets.only(top: 16, left: 30, right: 30),
                 child: ElevatedButton(

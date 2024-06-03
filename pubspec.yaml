@@ -18,8 +18,8 @@ dependencies:
   shimmer: ^3.0.0
   supabase_flutter: ^2.0.0
   google_sign_in: ^6.1.6
-  url_launcher: ^6.2.4
   image_picker: ^1.0.7
+  url_launcher: ^6.2.4
 
 dev_dependencies:
   flutter_test:
@@ -42,12 +42,7 @@ flutter:
     - images/quizzes_cat/javascript/
     - images/quizzes_cat/react/
     - images/quizzes_cat/angular/
-    - images/quizzes_cat/bags/
-    - images/quizzes_cat/beauty/
-    - images/quizzes_cat/homegarden/
-    - images/quizzes_cat/inapp/
-    - images/quizzes_cat/kids/
-    - images/quizzes_cat/shoes/
+
     
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

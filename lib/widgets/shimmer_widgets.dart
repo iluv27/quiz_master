@@ -10,27 +10,30 @@ class SubCategoriesShimmer extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: GridView.builder(
-            itemCount: 12, // Placeholder for GridView items
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              mainAxisSpacing: 15,
-              crossAxisSpacing: 10,
-              crossAxisCount: 2,
-              childAspectRatio: 0.85,
-            ),
-            itemBuilder: (context, index) {
-              return Shimmer.fromColors(
-                baseColor: Colors.grey[300]!,
-                highlightColor: Colors.grey[100]!,
-                child: Container(
-                  margin: const EdgeInsets.all(8.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8.0),
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 25),
+            child: GridView.builder(
+              itemCount: 12, // Placeholder for GridView items
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                mainAxisSpacing: 15,
+                crossAxisSpacing: 10,
+                crossAxisCount: 2,
+                childAspectRatio: 0.85,
+              ),
+              itemBuilder: (context, index) {
+                return Shimmer.fromColors(
+                  baseColor: Colors.grey[300]!,
+                  highlightColor: Colors.grey[100]!,
+                  child: Container(
+                    margin: const EdgeInsets.all(8.0),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
                   ),
-                ),
-              );
-            },
+                );
+              },
+            ),
           ),
         ),
       ],

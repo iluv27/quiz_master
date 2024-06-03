@@ -53,8 +53,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
                       trailing: Container(
                         width: MediaQuery.sizeOf(context).width * 0.3,
                         decoration: const BoxDecoration(
-                            image: DecorationImage(
-                                image: AssetImage('images/javascript.png'))),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                'https://res.cloudinary.com/drldurxxp/image/upload/v1712859152/Quiz%20Master/category%20icons/javascript_eaavya.png'),
+                          ),
+                        ),
                       ),
                       shape: const RoundedRectangleBorder(
                         borderRadius: BorderRadius.all(

@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quiz_master/questions/quiz_sect.dart';
 import 'package:quiz_master/services/database.dart';
-import 'package:quiz_master/services/quiz_service.dart';
 import 'package:quiz_master/theme/theme.dart';
 
 class SubcategModel extends StatelessWidget {
-  const SubcategModel(
-      {super.key,
-      required this.assetName,
-      required this.mainCategName,
-      required this.subCategLabel,
-      required this.questionTotal,
-      this.categColor});
-
-  final String mainCategName;
+  const SubcategModel({
+    super.key,
+    required this.assetName,
+    required this.subCategLabel,
+    required this.questionTotal,
+    this.categColor,
+    required this.questionAnswerPage,
+  });
 
   final String assetName;
   final String subCategLabel;
   final int questionTotal;
   final Color? categColor;
+  final Function() questionAnswerPage;
 
   @override
   Widget build(BuildContext context) {
@@ -81,15 +79,7 @@ class SubcategModel extends StatelessWidget {
                   ),
                 ),
                 MaterialButton(
-                  onPressed: () {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) {
-                      return QuizScreen222(
-                        questionTitle: subCategLabel,
-                        questionQuestion: htmlQuestions,
-                      );
-                    }));
-                  },
+                  onPressed: questionAnswerPage,
                   elevation: 0,
                   height: 50,
                   minWidth: 50,
@@ -125,20 +115,8 @@ class CategHeaderLabel extends StatelessWidget {
         padding: const EdgeInsets.only(top: 15.0, bottom: 20),
         child: Text(
           headerLabel,
-          // category['category_name'] ?? '', // Display category_name
           style: Theme.of(context).textTheme.displayLarge,
         ),
-        // Column(
-        //   crossAxisAlignment: CrossAxisAlignment.start,
-        //   children: [
-        //     for (var category in categories)
-        //       Text(
-        //         headerLabel,
-        //         // category['category_name'] ?? '', // Display category_name
-        //         style: Theme.of(context).textTheme.displayLarge,
-        //       ),
-        //   ],
-        // ),
       );
     });
   }

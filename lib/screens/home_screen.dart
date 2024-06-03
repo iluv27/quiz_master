@@ -75,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
         FutureBuilder(
-          future: databaseProvider.fetchCategoriesData(),
+          future: databaseProvider.fetchCategoriesData(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const CategoriesShimmer();
@@ -89,30 +89,22 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: SizedBox(
                       height: 80,
                       child: ListView.builder(
-                        itemCount: Provider.of<DatabaseProvider>(context,
-                                listen: false)
-                            .categories
-                            .length,
+                        itemCount: databaseProvider.categories.length,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
                           return CategoryAvatars(
-                            image: Provider.of<DatabaseProvider>(context,
-                                        listen: false)
-                                    .categories[index]['category_image'] ??
+                            image: databaseProvider.categories[index]
+                                    ['category_image'] ??
                                 '',
-                            label: Provider.of<DatabaseProvider>(context,
-                                        listen: false)
-                                    .categories[index]['category_name'] ??
+                            label: databaseProvider.categories[index]
+                                    ['category_name'] ??
                                 '',
                             size: 40,
                             onTapped: () async {
-                              Provider.of<DatabaseProvider>(context,
-                                      listen: false)
-                                  .fetchSubCategoriesData(
-                                      Provider.of<DatabaseProvider>(context,
-                                                  listen: false)
-                                              .categories[index]['id'] ??
-                                          '');
+                              // await databaseProvider.fetchSubCategoriesData(
+                              //     databaseProvider.categories[index]['id'] ??
+                              //         '',
+                              //     context);
 
                               // debugPrint('Gotten here TWO');
                               // try {

@@ -12,9 +12,8 @@ import 'screens/quiz_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Supabase.initialize(url: supabaseUrl, anonKey: supabaseKey);
 
   runApp(
@@ -62,7 +61,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Provider.of<AuthProvider>(context).getProfile();
-    Provider.of<DatabaseProvider>(context).fetchCategoriesData();
+    Provider.of<DatabaseProvider>(context).fetchCategoriesData(context);
 
     return SafeArea(
       child: Scaffold(
